@@ -1,0 +1,323 @@
+---
+import { SITE, BUSINESS_TYPES, waLink } from '../config';
+import Icon from './Icon.astro';
+---
+
+<section class="hero" data-scene="progress:0;x:3.6;opacity:1" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <a class="pill" href="#ecf" data-hero>
+        <span class="pill-dot"></span>
+        e-CF obligatorio desde el 15 de noviembre · MyNeg ya está listo
+        <Icon name="ArrowRight" size={15} />
+      </a>
+      <h1 id="hero-title">
+        <span class="line" data-split>
+          Tu negocio,
+        </span>
+        <span class="line" data-split>
+          en orden.
+        </span>
+        <span class="line grad" data-hero>
+          Hasta sin internet.
+        </span>
+      </h1>
+      <p class="lead" data-hero>
+        Caja, inventario, compras, delivery, nómina y contabilidad en un solo sistema hecho para República Dominicana.
+        Cada empleado ve solo lo suyo. Tú lo ves todo, desde el celular.
+      </p>
+      <div class="ctas" data-hero>
+        <a
+          class="btn btn-primary"
+          href={waLink('Hola, quiero una demo de MyNeg para mi negocio.')}
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon name="MessageCircle" /> Pide tu demo por WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="#video">
+          <Icon name="Play" /> Míralo en 90 segundos
+        </a>
+      </div>
+      <ul class="trust" data-hero>
+        <li>
+          <Icon name="Check" size={16} /> {SITE.trialDays} días gratis
+        </li>
+        <li>
+          <Icon name="Check" size={16} /> Usuarios ilimitados
+        </li>
+        <li>
+          <Icon name="Check" size={16} /> Tus datos son tuyos
+        </li>
+      </ul>
+    </div>
+
+    <!-- Avisos tipo Dynamic Island que flotan junto al logo 3D -->
+    <div class="toasts" aria-hidden="true">
+      <div class="toast t1">
+        <span class="ti ok">✓</span>
+        <div>
+          <b>Caja cuadrada</b>
+          <small>Turno de María · diferencia RD$0.00</small>
+        </div>
+      </div>
+      <div class="toast t2">
+        <span class="ti blue">E32</span>
+        <div>
+          <b>Venta #1042 · RD$2,140.00</b>
+          <small>e-CF aceptado por la DGII</small>
+        </div>
+      </div>
+      <div class="toast t3">
+        <span class="ti mango">🛵</span>
+        <div>
+          <b>Pedido en camino</b>
+          <small>Luis lleva 3 entregas · Zona Naco</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-label="Tipos de negocio">
+    <div class="marquee-track">
+      {[...BUSINESS_TYPES, ...BUSINESS_TYPES].map((b, i) => (
+        <span aria-hidden={i >= BUSINESS_TYPES.length}>{b}</span>
+      ))}
+    </div>
+  </div>
+  <a class="scroll-hint" href="#te-suena" aria-label="Bajar">
+    <span></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 0 40px;
+    z-index: 2;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: 40px;
+    flex: 1;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 10px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    color: var(--text-2);
+    text-decoration: none;
+    background: rgba(255, 176, 32, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 176, 32, 0.28);
+    transition: background 0.2s;
+  }
+  .pill:hover {
+    background: rgba(255, 176, 32, 0.15);
+  }
+  .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mango);
+    box-shadow: 0 0 0 4px rgba(255, 176, 32, 0.2);
+    animation: ping 2s infinite;
+  }
+  @keyframes ping {
+    50% {
+      box-shadow: 0 0 0 8px rgba(255, 176, 32, 0);
+    }
+  }
+  h1 {
+    font-size: clamp(50px, 7.4vw, 104px);
+    margin-top: 26px;
+    font-weight: 750;
+    letter-spacing: -0.025em;
+  }
+  h1 .grad {
+    font-size: 0.62em;
+    margin-top: 0.12em;
+    letter-spacing: -0.02em;
+    padding-bottom: 0.08em;
+  }
+  h1 .line {
+    display: block;
+  }
+  h1 :global(.char) {
+    display: inline-block;
+    will-change: transform;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    list-style: none;
+    padding: 0;
+    margin: 26px 0 0;
+    color: var(--text-3);
+    font-size: 14.5px;
+  }
+  .trust li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trust :global(.icon) {
+    color: var(--green);
+  }
+
+  .toasts {
+    position: relative;
+    height: 520px;
+  }
+  .toast {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px 10px 10px;
+    border-radius: 999px;
+    background: rgba(12, 16, 26, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+      inset 0 0 0 1px var(--line-2),
+      0 20px 50px -20px rgba(0, 0, 0, 0.9);
+    font-size: 14px;
+    line-height: 1.25;
+    opacity: 0;
+    white-space: nowrap;
+  }
+  .toast b {
+    display: block;
+    font-weight: 600;
+  }
+  .toast small {
+    color: var(--text-3);
+    font-size: 12.5px;
+  }
+  .ti {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    flex: none;
+  }
+  .ti.ok {
+    background: rgba(52, 211, 153, 0.16);
+    color: var(--green);
+    font-size: 17px;
+  }
+  .ti.blue {
+    background: rgba(41, 151, 255, 0.18);
+    color: #7cc0ff;
+  }
+  .ti.mango {
+    background: rgba(255, 176, 32, 0.16);
+    font-size: 18px;
+  }
+  .t1 {
+    top: 4%;
+    right: 2%;
+  }
+  .t2 {
+    top: 44%;
+    right: -6%;
+  }
+  .t3 {
+    bottom: 4%;
+    right: 10%;
+  }
+
+  .marquee {
+    position: relative;
+    margin-top: 40px;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .marquee span {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    color: var(--text-2);
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - 7px));
+    }
+  }
+  .scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 26px;
+    height: 40px;
+    margin-left: -13px;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1.5px var(--line-2);
+  }
+  .scroll-hint span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--text-2);
+    animation: wheel 1.8s infinite;
+  }
+  @keyframes wheel {
+    60% {
+      transform: translateY(12px);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .toasts {
+      display: none;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(ellipse at 50% 40%, rgba(5, 7, 13, 0.35), rgba(5, 7, 13, 0.85) 70%);
+    }
+    .scroll-hint {
+      display: none;
+    }
+  }
+</style>

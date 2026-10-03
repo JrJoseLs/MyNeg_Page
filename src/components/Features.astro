@@ -1,0 +1,235 @@
+---
+import Icon from './Icon.astro';
+
+const features = [
+  {
+    icon: 'ScanBarcode',
+    title: 'Caja rápida',
+    text: 'Escáner, cámara del celular, varios tickets en espera y cobro mixto.',
+    size: 'wide',
+    tone: 'blue',
+  },
+  {
+    icon: 'Calculator',
+    title: 'Cuadre guiado',
+    text: 'Conteo por billetes, cierre a ciegas y faltantes con acuerdo firmado.',
+    tone: 'teal',
+  },
+  {
+    icon: 'PackageSearch',
+    title: 'Pedido sugerido',
+    text: 'Igual de rápido con 50 que con 50,000 productos. Y con presupuesto.',
+    tone: 'mango',
+  },
+  {
+    icon: 'FileCode2',
+    title: 'Compras desde el XML',
+    text: 'Arrastra el e-CF del proveedor: lo reconoce por su RNC y empareja los productos.',
+    tone: 'blue',
+  },
+  {
+    icon: 'Building2',
+    title: 'Sucursales',
+    text: 'Cada una con lo suyo; tú las comparas todas desde el inicio.',
+    tone: 'teal',
+  },
+  {
+    icon: 'Bike',
+    title: 'Delivery',
+    text: 'Tablero por etapas, zonas con su cargo, rutas y liquidación del repartidor.',
+    size: 'tall',
+    tone: 'mango',
+  },
+  {
+    icon: 'UtensilsCrossed',
+    title: 'Mesas y cocina',
+    text: 'Salón en vivo, comandas con reloj, precuenta dividida y propina legal.',
+    tone: 'coral',
+  },
+  {
+    icon: 'Wrench',
+    title: 'Taller',
+    text: 'Recepción con fotos, garantías, presupuesto que el cliente aprueba en su celular.',
+    tone: 'blue',
+  },
+  {
+    icon: 'Factory',
+    title: 'Producción y recetas',
+    text: 'Costo real por unidad, margen y cuántos puedes hacer con lo que hay.',
+    tone: 'green',
+  },
+  {
+    icon: 'BookOpen',
+    title: 'Contabilidad automática',
+    text: 'Diario, mayor, balanza y balance general, cuadrados y sin digitar.',
+    size: 'wide',
+    tone: 'teal',
+  },
+  {
+    icon: 'BadgeDollarSign',
+    title: 'Nómina dominicana',
+    text: 'AFP, SFS, ISR, horas extra, regalía pascual y liquidación según el Código de Trabajo.',
+    tone: 'green',
+  },
+  {
+    icon: 'Smartphone',
+    title: 'En el celular',
+    text: 'Se instala como app, modo claro y oscuro, y buscador global con Ctrl K.',
+    tone: 'coral',
+  },
+] as const;
+
+const stats = [
+  { n: 44, label: 'permisos ajustables' },
+  { n: 10, label: 'tipos de negocio con plantilla' },
+  { n: 24, suffix: ' h', label: 'entre respaldos automáticos' },
+  { n: 1, label: 'clic para descargar todos tus datos' },
+];
+---
+
+<section class="section" id="modulos" data-scene="opacity:0.08" aria-labelledby="features-title">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>
+      Todo en un solo lugar
+    </span>
+    <h2 class="h2" id="features-title" data-reveal>
+      Activa lo que tu negocio <span class="grad">necesita hoy.</span>
+    </h2>
+    <p class="lead" data-reveal>
+      Empieza con la caja. Suma módulos cuando crezcas. Sin cambiar de sistema nunca más.
+    </p>
+
+    <ul class="bento">
+      {features.map((f) => (
+        <li class:list={['glow-card', 'size' in f ? f.size : '', `tone-${f.tone}`]} data-reveal>
+          <span class="ico">
+            <Icon name={f.icon} size={24} />
+          </span>
+          <h3>{f.title}</h3>
+          <p>{f.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <dl class="stats">
+      {stats.map((s) => (
+        <div data-reveal>
+          <dt>{s.label}</dt>
+          <dd>
+            <span data-count={s.n}>{s.n}</span>
+            {'suffix' in s ? s.suffix : ''}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .bento {
+    list-style: none;
+    padding: 0;
+    margin: 56px 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(200px, auto);
+    gap: 14px;
+  }
+  .bento li {
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(12, 16, 26, 0.7);
+  }
+  .wide {
+    grid-column: span 2;
+  }
+  .tall {
+    grid-row: span 2;
+  }
+  .ico {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    color: var(--c);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+  }
+  .tone-blue {
+    --c: var(--blue);
+  }
+  .tone-teal {
+    --c: var(--teal);
+  }
+  .tone-mango {
+    --c: var(--mango);
+  }
+  .tone-coral {
+    --c: var(--coral);
+  }
+  .tone-green {
+    --c: var(--green);
+  }
+  h3 {
+    margin-top: auto;
+    padding-top: 26px;
+    font-size: 23px;
+    letter-spacing: -0.02em;
+  }
+  .bento p {
+    margin-top: 8px;
+    color: var(--text-2);
+    font-size: 15.5px;
+  }
+  .tall {
+    background:
+      radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--c) 18%, transparent), transparent 60%),
+      rgba(12, 16, 26, 0.7) !important;
+  }
+  .stats {
+    margin: 80px 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 24px 4px;
+    border-top: 1px solid var(--line-2);
+  }
+  dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  dt {
+    margin-top: 10px;
+    color: var(--text-2);
+  }
+  @media (max-width: 1000px) {
+    .bento,
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tall {
+      grid-row: auto;
+    }
+  }
+  @media (max-width: 560px) {
+    .bento {
+      grid-template-columns: 1fr;
+    }
+    .wide {
+      grid-column: auto;
+    }
+    .bento li {
+      min-height: 0;
+    }
+  }
+</style>

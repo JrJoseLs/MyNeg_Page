@@ -1,0 +1,208 @@
+---
+const chapters = [
+  {
+    tag: '01 · Caja',
+    title: 'Una caja que vuela.',
+    text: 'Escanea, escribe 3*cemento y cobra. Efectivo, tarjeta, transferencia, crédito o mixto, con el cambio en billetes dominicanos y el NCF correcto. Los descuentos piden el PIN del supervisor.',
+    keys: ['F2 buscar', 'F4 cliente', 'F8 ticket nuevo', 'F12 cobrar'],
+  },
+  {
+    tag: '02 · Inventario',
+    title: 'Inventario que se pide solo.',
+    text: 'El pedido sugerido mira lo que se vendió, lo que viene en camino y lo que otra sucursal tiene de sobra. Arrastra el XML del e-CF del proveedor y la compra se registra sola.',
+    keys: ['Tallas y colores', 'Conteo del día', 'Etiquetas', 'Kardex'],
+  },
+  {
+    tag: '03 · Sucursales y delivery',
+    title: 'Todo conectado. Nada mezclado.',
+    text: 'Cada sucursal con lo suyo y tú con la vista completa. Transferencias que viajan «en camino», repartidores con su ruta y la caja que liquida cada entrega.',
+    keys: ['Transferencias', 'Repartidores', 'Mesas y cocina', 'Taller'],
+  },
+  {
+    tag: '04 · Números',
+    title: 'Números claros. DGII tranquila.',
+    text: 'Ventas por hora, vendedor y categoría, rentabilidad por producto, ITBIS del mes con 606 y 607, y una contabilidad que se arma sola, siempre cuadrada.',
+    keys: ['606 / 607', 'Estado de resultados', 'Nómina TSS', 'Auditoría'],
+  },
+];
+---
+
+<section class="story" id="como-funciona" aria-label="Cómo funciona MyNeg">
+  <div class="sticky">
+    <div class="wrap story-grid">
+      <div class="chapters">
+        {chapters.map((c, i) => (
+          <article class="chapter" data-chapter={i} aria-hidden={i > 0 ? 'true' : 'false'}>
+            <span class="eyebrow">{c.tag}</span>
+            <h2>{c.title}</h2>
+            <p>{c.text}</p>
+            <ul>
+              {c.keys.map((k) => (
+                <li>{k}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <ol class="dots" aria-hidden="true">
+        {chapters.map((_, i) => (
+          <li data-dot={i} />
+        ))}
+      </ol>
+    </div>
+  </div>
+  <!-- Versión sin JS / movimiento reducido: los capítulos uno debajo de otro -->
+</section>
+
+<style>
+  .story {
+    position: relative;
+    height: 480vh;
+    z-index: 2;
+  }
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    position: relative;
+  }
+  .chapters {
+    display: grid;
+  }
+  .chapter {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(8px);
+    transition:
+      opacity 0.6s,
+      transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 0.6s;
+    pointer-events: none;
+  }
+  .chapter.active {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    pointer-events: auto;
+  }
+  .chapter h2 {
+    font-size: clamp(40px, 5.6vw, 72px);
+    margin-top: 18px;
+  }
+  .chapter p {
+    margin-top: 22px;
+    font-size: clamp(17px, 1.5vw, 19.5px);
+    color: var(--text-2);
+    max-width: 50ch;
+  }
+  .chapter ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+  }
+  .chapter li {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 7px 12px;
+    border-radius: 10px;
+    background: var(--card-2);
+    box-shadow:
+      inset 0 0 0 1px var(--line-2),
+      inset 0 -2px 0 rgba(255, 255, 255, 0.06);
+  }
+  .dots {
+    position: absolute;
+    right: var(--gutter);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .dots li {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line-2);
+    transition:
+      height 0.4s,
+      background 0.4s;
+  }
+  .dots li.active {
+    height: 28px;
+    background: var(--teal);
+  }
+  @media (max-width: 960px) {
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+    .sticky {
+      align-items: flex-end;
+      padding-bottom: 9vh;
+    }
+    .chapter {
+      background: linear-gradient(180deg, transparent, rgba(5, 7, 13, 0.85) 30%);
+      padding-top: 40px;
+    }
+    .dots {
+      top: 22%;
+    }
+  }
+  /* Sin JS: lista normal */
+  :global(html:not(.js)) .story {
+    height: auto;
+  }
+  :global(html:not(.js)) .sticky {
+    position: relative;
+    height: auto;
+    padding: 80px 0;
+  }
+  :global(html:not(.js)) .chapters {
+    gap: 80px;
+  }
+  :global(html:not(.js)) .chapter {
+    grid-area: auto;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  /* Sin animaciones: lista normal */
+  @media (prefers-reduced-motion: reduce) {
+    .story {
+      height: auto;
+    }
+    .sticky {
+      position: relative;
+      height: auto;
+      padding: 80px 0;
+    }
+    .chapters {
+      gap: 80px;
+    }
+    .chapter {
+      grid-area: auto;
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+    .dots {
+      display: none;
+    }
+  }
+</style>

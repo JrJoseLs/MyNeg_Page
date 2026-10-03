@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Manuales para clientes y material interno: nunca se publican
+privado/
+
+# Proyecto de video: el render final se copia a public/video
+video/node_modules/
+video/out/

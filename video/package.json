@@ -1,0 +1,27 @@
+{
+  "name": "myneg-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "voz": "python scripts/voz.py",
+    "musica": "python scripts/musica.py",
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts MyNeg16x9 out/myneg-90s.mp4 && remotion render src/index.ts MyNeg9x16 out/myneg-90s-vertical.mp4",
+    "poster": "remotion still src/index.ts MyNeg16x9 out/poster.jpg --frame=930"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.532",
+    "@remotion/google-fonts": "^4.0.532",
+    "lucide-react": "^1.51.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.532"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  }
+}

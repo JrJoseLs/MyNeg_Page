@@ -1,0 +1,329 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="sin-internet" data-scene="opacity:0.1" aria-labelledby="offline-title">
+  <div class="wrap grid">
+    <div class="demo glow-card" data-reveal id="offline-demo" data-online="true">
+      <div class="bar">
+        <span class="status">
+          <span class="dot"></span>
+          <span class="status-text">En línea</span>
+        </span>
+        <label class="switch">
+          <input type="checkbox" checked id="net-toggle" />
+          <span class="track">
+            <span class="knob"></span>
+          </span>
+          <span class="sr">Internet</span>
+          <Icon name="WifiOff" size={18} class="wifi-off" />
+        </label>
+      </div>
+      <div class="total">
+        <small>Vendido en el turno</small>
+        <strong id="turn-total">RD$0.00</strong>
+      </div>
+      <button class="btn btn-primary sell" id="sell" type="button">
+        <Icon name="ScanBarcode" /> Cobrar una venta
+      </button>
+      <ul class="sales" id="sales" aria-live="polite"></ul>
+      <p class="pending" id="pending">
+        Todo está en el servidor.
+      </p>
+    </div>
+
+    <div>
+      <span class="eyebrow" data-reveal>
+        Caja sin internet
+      </span>
+      <h2 class="h2" id="offline-title" data-reveal>
+        Se cayó el internet.
+        <br />
+        <span class="grad">La caja ni se enteró.</span>
+      </h2>
+      <p class="lead" data-reveal>
+        Pruébalo: apaga el internet y sigue cobrando. MyNeg guarda una copia del catálogo y de los clientes, y aparta
+        comprobantes para ese equipo. Al volver la conexión, todo sube solo y sin duplicarse.
+      </p>
+      <p class="note" data-reveal>
+        Y no deja cuadrar la caja mientras quede algo por subir. Así no se pierde ni un peso.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const demo = document.getElementById('offline-demo')!;
+  const toggle = document.getElementById('net-toggle') as HTMLInputElement;
+  const list = document.getElementById('sales')!;
+  const totalEl = document.getElementById('turn-total')!;
+  const pendingEl = document.getElementById('pending')!;
+  const statusText = demo.querySelector('.status-text')!;
+  const items = [
+    'Cemento gris',
+    'Tornillos 1/4',
+    'Pintura blanca',
+    'Llave de paso',
+    'Bombillo LED',
+    'Varilla 3/8',
+    'Cinta aislante',
+  ];
+  let total = 0;
+  let n = 1041;
+  const money = (v: number) => 'RD$' + v.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+  const refresh = () => {
+    const pending = list.querySelectorAll('.wait').length;
+    pendingEl.textContent = pending
+      ? `${pending} ${pending === 1 ? 'venta guardada' : 'ventas guardadas'} en este equipo. Se suben al volver el internet.`
+      : 'Todo está en el servidor.';
+    pendingEl.classList.toggle('warn', pending > 0);
+  };
+
+  const sell = () => {
+    const amount = Math.round(150 + Math.random() * 3200);
+    total += amount;
+    totalEl.textContent = money(total);
+    const online = toggle.checked;
+    const li = document.createElement('li');
+    li.className = online ? 'ok' : 'wait';
+    li.innerHTML = `<span class="sale-id">#${++n}</span><span class="sale-name">${items[n % items.length]}</span><span class="sale-amt">${money(amount)}</span><span class="sale-st">${online ? '✓' : '⏳'}</span>`;
+    list.prepend(li);
+    while (list.children.length > 5) list.lastElementChild!.remove();
+    refresh();
+  };
+
+  const setOnline = (on: boolean) => {
+    demo.dataset.online = String(on);
+    statusText.textContent = on ? 'En línea' : 'Sin conexión · vendiendo igual';
+    if (on) {
+      [...list.querySelectorAll<HTMLElement>('.wait')].reverse().forEach((li, i) =>
+        setTimeout(
+          () => {
+            li.className = 'ok synced';
+            li.querySelector('.sale-st')!.textContent = '✓';
+            refresh();
+          },
+          350 * (i + 1),
+        ),
+      );
+    }
+    refresh();
+  };
+
+  document.getElementById('sell')!.addEventListener('click', () => {
+    stopAuto();
+    sell();
+  });
+  toggle.addEventListener('change', () => {
+    stopAuto();
+    setOnline(toggle.checked);
+  });
+
+  // Se juega solo una vez la primera vez que se ve, hasta que la persona toca algo
+  let timers: number[] = [];
+  const stopAuto = () => {
+    timers.forEach(clearTimeout);
+    timers = [];
+  };
+  const script: [number, () => void][] = [
+    [300, sell],
+    [1300, sell],
+    [2300, () => ((toggle.checked = false), setOnline(false))],
+    [3200, sell],
+    [4100, sell],
+    [5000, sell],
+    [6400, () => ((toggle.checked = true), setOnline(true))],
+  ];
+  new IntersectionObserver(
+    ([e], obs) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      timers = script.map(([t, fn]) => window.setTimeout(fn, t));
+    },
+    { threshold: 0.5 },
+  ).observe(demo);
+</script>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 90px);
+    align-items: center;
+  }
+  .demo {
+    padding: 22px;
+    background: rgba(12, 16, 26, 0.75);
+    backdrop-filter: blur(14px);
+    transition: box-shadow 0.4s;
+  }
+  .demo[data-online='false'] {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 176, 32, 0.45),
+      0 0 80px -30px rgba(255, 176, 32, 0.5);
+  }
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(52, 211, 153, 0.12);
+    color: var(--green);
+    transition: all 0.3s;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .demo[data-online='false'] .status {
+    background: rgba(255, 176, 32, 0.12);
+    color: var(--mango);
+  }
+  .switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .switch input {
+    position: absolute;
+    opacity: 0;
+  }
+  .track {
+    width: 50px;
+    height: 30px;
+    border-radius: 15px;
+    background: var(--line-2);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .switch input:checked + .track {
+    background: var(--green);
+  }
+  .switch input:focus-visible + .track {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  .knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .switch input:checked + .track .knob {
+    transform: translateX(20px);
+  }
+  .switch :global(.wifi-off) {
+    color: var(--mango);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .demo[data-online='false'] .switch :global(.wifi-off) {
+    opacity: 1;
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .total {
+    margin: 22px 0 16px;
+  }
+  .total small {
+    display: block;
+    color: var(--text-3);
+    font-size: 13px;
+  }
+  .total strong {
+    font-family: var(--display);
+    font-size: 40px;
+    letter-spacing: -0.02em;
+  }
+  .sell {
+    width: 100%;
+  }
+  .sales {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0;
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    min-height: 230px;
+  }
+  .sales :global(li) {
+    display: grid;
+    grid-template-columns: 54px 1fr auto 22px;
+    gap: 10px;
+    align-items: center;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: var(--card);
+    font-size: 14px;
+    animation: slideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .sales :global(.sale-id) {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .sales :global(.sale-amt) {
+    font-variant-numeric: tabular-nums;
+  }
+  .sales :global(.ok .sale-st) {
+    color: var(--green);
+  }
+  .sales :global(.wait) {
+    background: rgba(255, 176, 32, 0.08);
+  }
+  .sales :global(.synced) {
+    animation: flash 0.8s;
+  }
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes flash {
+    30% {
+      background: rgba(52, 211, 153, 0.25);
+    }
+  }
+  .pending {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--text-3);
+  }
+  .pending:global(.warn) {
+    color: var(--mango);
+  }
+  .note {
+    margin-top: 22px;
+    color: var(--text-3);
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .demo {
+      order: 2;
+    }
+  }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jrjosels.github.io/MyNeg_Page/sitemap-index.xml

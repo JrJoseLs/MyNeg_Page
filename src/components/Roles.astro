@@ -1,0 +1,203 @@
+---
+import { ROLES } from '../config';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="roles" data-scene="opacity:0.1" aria-labelledby="roles-title">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>
+      Roles y permisos
+    </span>
+    <h2 class="h2" id="roles-title" data-reveal>
+      Cada quien ve lo suyo.
+      <br />
+      <span class="grad">Tú lo ves todo.</span>
+    </h2>
+    <p class="lead" data-reveal>
+      44 permisos que puedes ajustar, acceso por sucursal, PIN de supervisor y una auditoría de todo lo sensible. Elige
+      un rol:
+    </p>
+
+    <div class="layout" data-reveal>
+      <div class="tabs" role="tablist" aria-label="Roles">
+        {ROLES.map((r, i) => (
+          <button
+            role="tab"
+            type="button"
+            id={`role-tab-${i}`}
+            aria-controls={`role-panel-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {r.name}
+          </button>
+        ))}
+      </div>
+      <div class="panels glow-card">
+        {ROLES.map((r, i) => (
+          <div class="panel" role="tabpanel" id={`role-panel-${i}`} aria-labelledby={`role-tab-${i}`} hidden={i !== 0}>
+            <div class="avatar" aria-hidden="true">
+              {r.name.slice(0, 1)}
+            </div>
+            <h3>{r.name}</h3>
+            <p class="sees">{r.sees}</p>
+            <ul>
+              {r.can.map((c) => (
+                <li class="can">
+                  <Icon name="Check" size={18} /> {c}
+                </li>
+              ))}
+              {r.cannot.map((c) => (
+                <li class="cannot">
+                  <Icon name="Lock" size={18} /> {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('#roles [role="tab"]')];
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, j) => {
+      const on = i === j;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown') select((i + 1) % tabs.length, true);
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') select((i - 1 + tabs.length) % tabs.length, true);
+      else return;
+      e.preventDefault();
+    });
+  });
+</script>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 28px;
+    margin-top: 50px;
+    align-items: start;
+  }
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: flex-start;
+  }
+  .tabs button {
+    all: unset;
+    cursor: pointer;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-weight: 550;
+    font-size: 16px;
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--text-2);
+    transition:
+      background 0.25s,
+      color 0.25s,
+      box-shadow 0.25s,
+      transform 0.25s;
+  }
+  .tabs button:hover {
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+  .tabs button[aria-selected='true'] {
+    background: linear-gradient(135deg, rgba(41, 151, 255, 0.35), rgba(62, 230, 210, 0.2));
+    box-shadow: inset 0 0 0 1px rgba(62, 230, 210, 0.5);
+    color: var(--text);
+  }
+  .tabs button:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+  .panels {
+    padding: clamp(24px, 4vw, 40px);
+    min-height: 360px;
+    background: rgba(12, 16, 26, 0.7);
+    backdrop-filter: blur(14px);
+  }
+  .panel:not([hidden]) {
+    animation: in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 26px;
+    background: linear-gradient(135deg, var(--blue), var(--teal));
+    color: #04121f;
+  }
+  h3 {
+    margin-top: 18px;
+    font-size: 34px;
+  }
+  .sees {
+    margin-top: 8px;
+    color: var(--text-2);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+    display: grid;
+    gap: 12px;
+  }
+  li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  li :global(.icon) {
+    flex: none;
+    margin-top: 3px;
+  }
+  .can :global(.icon) {
+    color: var(--green);
+  }
+  .cannot {
+    color: var(--text-3);
+  }
+  .cannot :global(.icon) {
+    color: var(--coral);
+  }
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 4px 2px 8px;
+      scrollbar-width: none;
+    }
+    .tabs button {
+      white-space: nowrap;
+    }
+  }
+</style>

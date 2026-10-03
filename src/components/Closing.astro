@@ -1,0 +1,236 @@
+---
+import { FAQ, SITE, waLink } from '../config';
+import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="section" id="video" data-scene="opacity:0.06" aria-labelledby="video-title">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow" data-reveal>
+        90 segundos
+      </span>
+      <h2 class="h2" id="video-title" data-reveal>
+        Míralo antes de <span class="grad">creerlo.</span>
+      </h2>
+    </div>
+    <div class="player" data-reveal>
+      <video
+        controls
+        preload="none"
+        playsinline
+        poster={`${base}/video/poster.jpg`}
+        aria-label="Video: MyNeg en 90 segundos"
+      >
+        <source src={`${base}/video/myneg-90s.mp4`} type="video/mp4" />
+        <track kind="captions" src={`${base}/video/myneg-90s.vtt`} srclang="es" label="Español" default />
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="preguntas" data-scene="opacity:0.06" aria-labelledby="faq-title">
+  <div class="wrap faq-wrap">
+    <div>
+      <span class="eyebrow" data-reveal>
+        Preguntas frecuentes
+      </span>
+      <h2 class="h2" id="faq-title" data-reveal>
+        Lo que siempre
+        <br />
+        nos preguntan.
+      </h2>
+      <p class="lead" data-reveal>
+        ¿Otra duda? Escríbenos y te respondemos por WhatsApp.
+      </p>
+    </div>
+    <div class="faq">
+      {FAQ.map((f, i) => (
+        <details data-reveal open={i === 0}>
+          <summary>
+            {f.q}
+            <span class="plus" aria-hidden="true" />
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="final" id="empezar" data-scene="progress:0;x:0;opacity:0.45" aria-labelledby="final-title">
+  <div class="wrap center">
+    <h2 id="final-title" data-reveal>
+      Pon tu negocio
+      <br />
+      <span class="grad">en orden hoy.</span>
+    </h2>
+    <p class="lead" data-reveal>
+      Te lo instalamos, cargamos tus productos desde Excel y entrenamos a tu equipo.
+    </p>
+    <div class="ctas" data-reveal>
+      <a class="btn btn-primary" href={waLink('Hola, quiero empezar con MyNeg.')} target="_blank" rel="noopener">
+        <Icon name="MessageCircle" /> Escríbenos por WhatsApp
+      </a>
+      <a class="btn btn-ghost" href={`mailto:${SITE.email}`}>
+        {SITE.email}
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand">
+      <img src={`${base}/favicon.svg`} alt="" width="22" height="22" /> MyNeg
+    </span>
+    <span>© {new Date().getFullYear()} MyNeg · Hecho en República Dominicana</span>
+    <nav aria-label="Pie de página">
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#precios">Precios</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .center {
+    text-align: center;
+  }
+  .center .lead {
+    margin-inline: auto;
+  }
+  .player {
+    margin-top: 50px;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    box-shadow:
+      inset 0 0 0 1px var(--line-2),
+      0 50px 120px -50px rgba(41, 151, 255, 0.6);
+  }
+  video {
+    width: 100%;
+    height: 100%;
+  }
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(30px, 6vw, 80px);
+    align-items: start;
+  }
+  .faq {
+    display: grid;
+    gap: 10px;
+  }
+  details {
+    border-radius: 18px;
+    background: rgba(12, 16, 26, 0.7);
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: background 0.3s;
+  }
+  details[open] {
+    background: rgba(41, 151, 255, 0.08);
+  }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 22px;
+    font-weight: 600;
+    font-size: 17.5px;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .plus {
+    position: relative;
+    flex: none;
+    width: 14px;
+    height: 14px;
+  }
+  .plus::before,
+  .plus::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--teal);
+    transition: transform 0.3s;
+  }
+  .plus::after {
+    transform: rotate(90deg);
+  }
+  details[open] .plus::after {
+    transform: rotate(0);
+  }
+  details p {
+    padding: 0 22px 22px;
+    color: var(--text-2);
+  }
+  .final {
+    position: relative;
+    z-index: 2;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0;
+  }
+  .final h2 {
+    font-size: clamp(54px, 9vw, 130px);
+    text-shadow: 0 10px 60px rgba(5, 7, 13, 0.9);
+  }
+  .final .ctas {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+  footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line);
+    padding: 30px 0 40px;
+    color: var(--text-3);
+    font-size: 14px;
+    background: var(--bg);
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 30px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--text);
+    font-family: var(--display);
+    font-weight: 700;
+  }
+  footer nav {
+    display: flex;
+    gap: 18px;
+  }
+  footer a {
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: var(--text);
+  }
+  @media (max-width: 860px) {
+    .faq-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Pains from '../components/Pains.astro';
+import Story from '../components/Story.astro';
+import Receipt from '../components/Receipt.astro';
+import Offline from '../components/Offline.astro';
+import Ecf from '../components/Ecf.astro';
+import Roles from '../components/Roles.astro';
+import Features from '../components/Features.astro';
+import Pricing from '../components/Pricing.astro';
+import Closing from '../components/Closing.astro';
+---
+
+<Base>
+  <script is:inline>
+    document.documentElement.classList.add('js');
+  </script>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <Nav />
+  <main id="contenido">
+    <Hero />
+    <Pains />
+    <Story />
+    <Receipt />
+    <Offline />
+    <Ecf />
+    <Roles />
+    <Features />
+    <Pricing />
+    <Closing />
+  </main>
+</Base>
+
+<script>
+  import '../scripts/main';
+</script>

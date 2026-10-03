@@ -1,0 +1,250 @@
+---
+import Icon from './Icon.astro';
+
+const lines = [
+  { qty: 3, name: 'Cemento gris 42.5 kg', price: 445 },
+  { qty: 2, name: 'Varilla 3/8" x 20 pies', price: 210 },
+  { qty: 1, name: 'Llave de paso 1/2"', price: 385 },
+];
+const total = lines.reduce((s, l) => s + l.qty * l.price, 0);
+const net = Math.round((total / 1.18) * 100) / 100;
+const itbis = Math.round((total - net) * 100) / 100;
+const paid = 2500;
+const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// QR de muestra (decorativo): patrón fijo con los tres cuadros de posición
+const N = 25;
+let seed = 7;
+const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+const finders = [
+  [0, 0],
+  [N - 7, 0],
+  [0, N - 7],
+];
+/** Devuelve true/false dentro de un cuadro de posición, o null fuera de ellos. */
+const finderCell = (x: number, y: number) => {
+  for (const [fx, fy] of finders) {
+    const lx = x - fx;
+    const ly = y - fy;
+    if (lx < -1 || ly < -1 || lx > 7 || ly > 7) continue;
+    if (lx === -1 || ly === -1 || lx === 7 || ly === 7) return false;
+    const ring = lx === 0 || lx === 6 || ly === 0 || ly === 6;
+    const core = lx >= 2 && lx <= 4 && ly >= 2 && ly <= 4;
+    return ring || core;
+  }
+  return null;
+};
+const cells: string[] = [];
+for (let y = 0; y < N; y++)
+  for (let x = 0; x < N; x++) {
+    const on = finderCell(x, y) ?? rnd() < 0.5;
+    if (on) cells.push(`M${x} ${y}h1v1h-1z`);
+  }
+---
+
+<section class="section" data-scene="opacity:0.1" aria-labelledby="receipt-title">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow" data-reveal>
+        Facturación
+      </span>
+      <h2 class="h2" id="receipt-title" data-reveal>
+        Un recibo que la <span class="grad">DGII entiende.</span>
+      </h2>
+      <p class="lead" data-reveal>
+        NCF B01, B02, B14 y B15, o e-CF con su código de seguridad y el QR de la DGII. Térmico de 80 o 58 mm, con tu
+        logo, y el cajón se abre solo al cobrar en efectivo.
+      </p>
+      <ul class="points">
+        <li data-reveal>
+          <Icon name="ShieldCheck" /> Si la DGII no responde, la factura queda en contingencia y se reenvía sola.
+        </li>
+        <li data-reveal>
+          <Icon name="Receipt" /> Notas de crédito (B04 / E34) en devoluciones, con saldo a favor para el cambio de
+          talla.
+        </li>
+        <li data-reveal>
+          <Icon name="MessageCircle" /> Cotizaciones con tu logo y fotos, enviadas por WhatsApp.
+        </li>
+      </ul>
+    </div>
+
+    <div class="printer" aria-label="Ejemplo de recibo">
+      <div class="slot">
+        <span class="led"></span>
+      </div>
+      <div class="paper-clip">
+        <div class="paper" id="paper">
+          <div class="r-center">
+            <strong class="r-biz">FERRETERÍA EL PROGRESO</strong>
+            <span>RNC 1-31-00000-0 · Santiago, RD</span>
+            <span>Factura de Consumo Electrónica</span>
+            <span>e-NCF: E320000000123</span>
+          </div>
+          <hr />
+          {lines.map((l) => (
+            <div class="r-line" data-print>
+              <span>
+                {l.qty} x {l.name}
+              </span>
+              <span>{fmt(l.qty * l.price)}</span>
+            </div>
+          ))}
+          <hr />
+          <div class="r-line" data-print>
+            <span>Subtotal</span>
+            <span>{fmt(net)}</span>
+          </div>
+          <div class="r-line" data-print>
+            <span>ITBIS 18%</span>
+            <span>{fmt(itbis)}</span>
+          </div>
+          <div class="r-line r-total" data-print>
+            <span>TOTAL RD$</span>
+            <span>{fmt(total)}</span>
+          </div>
+          <div class="r-line" data-print>
+            <span>Efectivo</span>
+            <span>{fmt(paid)}</span>
+          </div>
+          <div class="r-line" data-print>
+            <span>Cambio</span>
+            <span>{fmt(paid - total)}</span>
+          </div>
+          <div class="r-bills" data-print>
+            200 + 100 + 50 + 10
+          </div>
+          <hr />
+          <div class="r-center" data-print>
+            <svg class="qr" viewBox={`-1 -1 ${N + 2} ${N + 2}`} aria-label="Código QR de la DGII (ejemplo)">
+              <rect x="-1" y="-1" width={N + 2} height={N + 2} fill="#fff"></rect>
+              <path d={cells.join('')} fill="#111"></path>
+            </svg>
+            <span>Código de seguridad: A7K2Q9</span>
+            <span>¡Gracias por su compra!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: clamp(40px, 6vw, 90px);
+    align-items: center;
+  }
+  .points {
+    list-style: none;
+    padding: 0;
+    margin: 36px 0 0;
+    display: grid;
+    gap: 16px;
+  }
+  .points li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    color: var(--text-2);
+  }
+  .points :global(.icon) {
+    flex: none;
+    color: var(--teal);
+    margin-top: 3px;
+  }
+  .printer {
+    position: relative;
+    justify-self: center;
+    width: min(360px, 100%);
+  }
+  .slot {
+    position: relative;
+    z-index: 2;
+    height: 46px;
+    border-radius: 18px 18px 10px 10px;
+    background: linear-gradient(180deg, #2a2f3b, #161a23);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 20px 40px -10px rgba(0, 0, 0, 0.8);
+  }
+  .slot::after {
+    content: '';
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 10px;
+    height: 6px;
+    border-radius: 3px;
+    background: #05070d;
+  }
+  .led {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+  }
+  .paper-clip {
+    position: relative;
+    margin: -12px 10% 0;
+    overflow: hidden;
+    padding-bottom: 30px;
+  }
+  .paper {
+    background: #fbfaf7;
+    color: #1a1a1a;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.55;
+    padding: 26px 18px 30px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  }
+  .r-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .r-biz {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  hr {
+    border: 0;
+    border-top: 1px dashed #999;
+    margin: 10px 0;
+  }
+  .r-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .r-total {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 4px 0;
+  }
+  .r-bills {
+    text-align: right;
+    font-size: 10.5px;
+    color: #666;
+  }
+  .qr {
+    width: 110px;
+    height: 110px;
+    margin: 4px 0 8px;
+    shape-rendering: crispEdges;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

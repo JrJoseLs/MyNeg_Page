@@ -1,0 +1,219 @@
+---
+import { PLANS, SITE, waLink } from '../config';
+import Icon from './Icon.astro';
+const fmt = (n: number) => n.toLocaleString('en-US');
+---
+
+<section class="section" id="precios" data-scene="opacity:0.08" aria-labelledby="pricing-title">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-reveal>
+        Precios
+      </span>
+      <h2 class="h2" id="pricing-title" data-reveal>
+        Pagas por sucursal.
+        <br />
+        <span class="grad">No por empleado.</span>
+      </h2>
+      <p class="lead" data-reveal>
+        Usuarios ilimitados en todos los planes y {SITE.trialDays} días de prueba. Mueve la barra para calcular tu
+        cuota.
+      </p>
+    </div>
+
+    <div class="slider" data-reveal>
+      <label for="branches">
+        Sucursales: <strong id="branches-out">1</strong>
+      </label>
+      <input id="branches" type="range" min="1" max="10" value="1" />
+    </div>
+
+    <ul class="plans">
+      {PLANS.map((p) => (
+        <li class:list={['plan', 'glow-card', { featured: p.featured }]} data-reveal>
+          {p.featured && <span class="badge">El más elegido</span>}
+          <h3>{p.name}</h3>
+          <p class="pitch">{p.pitch}</p>
+          <p class="price">
+            <small>RD$</small>
+            <strong data-base={p.price} data-branch={p.branch}>
+              {fmt(p.price)}
+            </strong>
+            <small>/mes</small>
+          </p>
+          <p class="extra">Incluye 1 sucursal · +RD${fmt(p.branch)} por cada adicional</p>
+          <ul>
+            {p.features.map((f) => (
+              <li>
+                <Icon name="Check" size={17} /> {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            class:list={['btn', p.featured ? 'btn-primary' : 'btn-ghost']}
+            href={waLink(`Hola, me interesa el plan ${p.name} de MyNeg.`)}
+            target="_blank"
+            rel="noopener"
+          >
+            Empezar prueba gratis
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  const input = document.getElementById('branches') as HTMLInputElement;
+  const out = document.getElementById('branches-out')!;
+  const prices = [...document.querySelectorAll<HTMLElement>('[data-base]')];
+  const update = () => {
+    const n = Number(input.value);
+    out.textContent = String(n);
+    input.style.setProperty('--fill', `${((n - 1) / 9) * 100}%`);
+    prices.forEach((el) => {
+      const total = Number(el.dataset.base) + Number(el.dataset.branch) * (n - 1);
+      el.textContent = total.toLocaleString('en-US');
+    });
+  };
+  input.addEventListener('input', update);
+  update();
+</script>
+
+<style>
+  .head {
+    text-align: center;
+  }
+  .head .lead {
+    margin-inline: auto;
+  }
+  .slider {
+    max-width: 440px;
+    margin: 40px auto 0;
+    text-align: center;
+  }
+  .slider label {
+    color: var(--text-2);
+  }
+  .slider strong {
+    color: var(--text);
+    font-size: 20px;
+  }
+  input[type='range'] {
+    width: 100%;
+    margin-top: 14px;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background:
+      linear-gradient(90deg, var(--blue), var(--teal)) 0 / var(--fill, 0%) 100% no-repeat,
+      var(--line-2);
+  }
+  input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    cursor: grab;
+  }
+  input[type='range']::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    cursor: grab;
+  }
+  .plans {
+    list-style: none;
+    padding: 0;
+    margin: 48px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+  .plan {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    background: rgba(12, 16, 26, 0.75);
+  }
+  .featured {
+    background: linear-gradient(170deg, rgba(41, 151, 255, 0.18), rgba(12, 16, 26, 0.85) 55%);
+    box-shadow:
+      inset 0 0 0 1px rgba(41, 151, 255, 0.5),
+      0 30px 80px -40px rgba(41, 151, 255, 0.7);
+  }
+  .badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--blue);
+  }
+  h3 {
+    font-size: 28px;
+  }
+  .pitch {
+    margin-top: 10px;
+    color: var(--text-2);
+    font-size: 15.5px;
+    min-height: 4.8em;
+  }
+  .price {
+    margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .price strong {
+    font-family: var(--display);
+    font-size: 54px;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .price small {
+    color: var(--text-3);
+    font-size: 15px;
+  }
+  .extra {
+    font-size: 13.5px;
+    color: var(--text-3);
+  }
+  .plan ul {
+    list-style: none;
+    padding: 0;
+    margin: 26px 0 30px;
+    display: grid;
+    gap: 10px;
+    font-size: 15.5px;
+  }
+  .plan li {
+    display: flex;
+    gap: 10px;
+  }
+  .plan li :global(.icon) {
+    color: var(--green);
+    flex: none;
+    margin-top: 4px;
+  }
+  .plan .btn {
+    margin-top: auto;
+  }
+  @media (max-width: 960px) {
+    .plans {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+    .pitch {
+      min-height: 0;
+    }
+  }
+</style>

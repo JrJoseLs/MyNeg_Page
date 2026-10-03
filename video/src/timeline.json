@@ -1,0 +1,301 @@
+{
+  "fps": 30,
+  "frames": 2700,
+  "scenes": [
+    {
+      "id": "hook",
+      "from": 0,
+      "frames": 148,
+      "audio": "audio/vo-00.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 113,
+      "captions": [
+        {
+          "from": 9,
+          "to": 91,
+          "text": "¿Tu caja cuadró ayer?"
+        },
+        {
+          "from": 91,
+          "to": 122,
+          "text": "¿Seguro?"
+        }
+      ]
+    },
+    {
+      "id": "dolor",
+      "from": 148,
+      "frames": 283,
+      "audio": "audio/vo-01.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 253,
+      "captions": [
+        {
+          "from": 9,
+          "to": 86,
+          "text": "El fiado, en un cuaderno."
+        },
+        {
+          "from": 86,
+          "to": 151,
+          "text": "El inventario, a ojo."
+        },
+        {
+          "from": 151,
+          "to": 222,
+          "text": "Y si se va el internet…"
+        },
+        {
+          "from": 222,
+          "to": 262,
+          "text": "se para todo."
+        }
+      ]
+    },
+    {
+      "id": "urgencia",
+      "from": 431,
+      "frames": 181,
+      "audio": "audio/vo-02.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 155,
+      "captions": [
+        {
+          "from": 9,
+          "to": 78,
+          "text": "Y desde el 15 de noviembre,"
+        },
+        {
+          "from": 78,
+          "to": 164,
+          "text": "la DGII exige factura electrónica."
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "from": 612,
+      "frames": 195,
+      "audio": "audio/vo-03.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 139,
+      "captions": [
+        {
+          "from": 9,
+          "to": 78,
+          "text": "Por eso existe MyNeg."
+        },
+        {
+          "from": 78,
+          "to": 148,
+          "text": "Tu negocio, en orden."
+        }
+      ]
+    },
+    {
+      "id": "caja",
+      "from": 807,
+      "frames": 329,
+      "audio": "audio/vo-04.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 302,
+      "captions": [
+        {
+          "from": 9,
+          "to": 52,
+          "text": "Escaneas y cobras:"
+        },
+        {
+          "from": 52,
+          "to": 132,
+          "text": "efectivo, tarjeta o transferencia,"
+        },
+        {
+          "from": 132,
+          "to": 193,
+          "text": "con su comprobante fiscal."
+        },
+        {
+          "from": 193,
+          "to": 222,
+          "text": "Y al cerrar,"
+        },
+        {
+          "from": 222,
+          "to": 311,
+          "text": "el cuadre te guía billete por billete."
+        }
+      ]
+    },
+    {
+      "id": "offline",
+      "from": 1136,
+      "frames": 243,
+      "audio": "audio/vo-05.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 217,
+      "captions": [
+        {
+          "from": 9,
+          "to": 65,
+          "text": "¿Se fue el internet?"
+        },
+        {
+          "from": 65,
+          "to": 133,
+          "text": "La caja sigue vendiendo."
+        },
+        {
+          "from": 133,
+          "to": 226,
+          "text": "Cuando vuelve, todo se sube solo."
+        }
+      ]
+    },
+    {
+      "id": "inventario",
+      "from": 1379,
+      "frames": 276,
+      "audio": "audio/vo-06.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 250,
+      "captions": [
+        {
+          "from": 9,
+          "to": 87,
+          "text": "El inventario te dice qué pedir,"
+        },
+        {
+          "from": 87,
+          "to": 128,
+          "text": "a quién y cuánto."
+        },
+        {
+          "from": 128,
+          "to": 198,
+          "text": "Y la compra se registra sola,"
+        },
+        {
+          "from": 198,
+          "to": 259,
+          "text": "con el XML del proveedor."
+        }
+      ]
+    },
+    {
+      "id": "modulos",
+      "from": 1655,
+      "frames": 256,
+      "audio": "audio/vo-07.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 229,
+      "captions": [
+        {
+          "from": 9,
+          "to": 134,
+          "text": "¿Delivery, mesas, taller, nómina o contabilidad?"
+        },
+        {
+          "from": 134,
+          "to": 238,
+          "text": "Activas solo lo que tu negocio necesita."
+        }
+      ]
+    },
+    {
+      "id": "roles",
+      "from": 1911,
+      "frames": 273,
+      "audio": "audio/vo-08.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 247,
+      "captions": [
+        {
+          "from": 9,
+          "to": 82,
+          "text": "Cada empleado ve solo lo suyo:"
+        },
+        {
+          "from": 82,
+          "to": 120,
+          "text": "la cajera vende,"
+        },
+        {
+          "from": 120,
+          "to": 174,
+          "text": "pero no ve tus costos."
+        },
+        {
+          "from": 174,
+          "to": 215,
+          "text": "Y tú lo ves todo,"
+        },
+        {
+          "from": 215,
+          "to": 256,
+          "text": "desde el celular."
+        }
+      ]
+    },
+    {
+      "id": "fiscal",
+      "from": 2184,
+      "frames": 215,
+      "audio": "audio/vo-09.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 185,
+      "captions": [
+        {
+          "from": 9,
+          "to": 88,
+          "text": "A fin de mes, el ITBIS,"
+        },
+        {
+          "from": 88,
+          "to": 108,
+          "text": "el 606"
+        },
+        {
+          "from": 108,
+          "to": 194,
+          "text": "y el 607 ya están listos."
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "from": 2399,
+      "frames": 301,
+      "audio": "audio/vo-10.mp3",
+      "voiceFrom": 9,
+      "voiceFrames": 270,
+      "captions": [
+        {
+          "from": 9,
+          "to": 31,
+          "text": "MyNeg."
+        },
+        {
+          "from": 31,
+          "to": 86,
+          "text": "14 días gratis."
+        },
+        {
+          "from": 86,
+          "to": 170,
+          "text": "Escríbenos por WhatsApp"
+        },
+        {
+          "from": 170,
+          "to": 264,
+          "text": "y pon tu negocio en orden."
+        },
+        {
+          "from": 264,
+          "to": 279,
+          "text": "Hoy."
+        }
+      ]
+    }
+  ]
+}

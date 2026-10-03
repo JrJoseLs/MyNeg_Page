@@ -1,0 +1,110 @@
+---
+import '../styles/global.css';
+import { SITE, FAQ, PLANS } from '../config';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}/og.png`, Astro.site).href;
+const videoUrl = new URL(`${base}/video/myneg-90s.mp4`, Astro.site).href;
+const posterUrl = new URL(`${base}/video/poster.jpg`, Astro.site).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: SITE.name,
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'Punto de venta e inventario',
+    operatingSystem: 'Web, Windows, Android, iOS',
+    inLanguage: 'es-DO',
+    description: SITE.description,
+    url: canonical,
+    image: ogImage,
+    areaServed: { '@type': 'Country', name: 'República Dominicana' },
+    offers: PLANS.map((p) => ({
+      '@type': 'Offer',
+      name: `Plan ${p.name}`,
+      price: p.price,
+      priceCurrency: 'DOP',
+      category: 'subscription',
+    })),
+    featureList: [
+      'Punto de venta con NCF y e-CF',
+      'Caja sin internet',
+      'Cuadre de caja guiado',
+      'Inventario y pedido sugerido',
+      'Reportes 606 y 607',
+      'Delivery, mesas y taller',
+      'Nómina con TSS e ISR',
+      'Contabilidad automática',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: 'MyNeg en 90 segundos: caja, inventario y e-CF para tu negocio',
+    description:
+      'Cómo MyNeg resuelve el cuadre de caja, el fiado, el inventario, la facturación electrónica de la DGII y el delivery, incluso sin internet.',
+    thumbnailUrl: posterUrl,
+    contentUrl: videoUrl,
+    uploadDate: '2026-10-03',
+    duration: 'PT1M30S',
+    inLanguage: 'es-DO',
+  },
+];
+---
+
+<!doctype html>
+<html lang="es-DO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{SITE.title}</title>
+    <meta name="description" content={SITE.description} />
+    <meta name="keywords" content={SITE.keywords.join(', ')} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={SITE.title} />
+    <meta property="og:description" content={SITE.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:video" content={videoUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={SITE.title} />
+    <meta name="twitter:description" content={SITE.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+
+    {jsonLd.map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip" href="#contenido">
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>
