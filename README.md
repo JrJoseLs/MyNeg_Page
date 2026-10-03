@@ -25,7 +25,7 @@ npm run preview    # sirve dist/ como en producción
 | Video | `video/` (ver `video/PUBLICAR.md`) |
 | Manuales por rol | `privado/manuales/contenido.mjs` → `npm run manuales:pdf` |
 
-> **Antes de publicar:** cambia `whatsapp` y `email` en `src/config.ts` (hoy tienen valores de ejemplo) y revisa los precios, que son los de ejemplo de Plataforma → Planes.
+> **Antes de publicar:** cambia el `email` en `src/config.ts` (hoy es de ejemplo) y revisa los precios, que son los de ejemplo de Plataforma → Planes.
 
 ## Publicar en GitHub Pages
 

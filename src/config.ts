@@ -21,8 +21,7 @@ export const SITE = {
     'nómina TSS AFP SFS',
   ],
   locale: 'es_DO',
-  // TODO: cambia por tu número (solo dígitos, con código de país)
-  whatsapp: '18090000000',
+  whatsapp: '18093603722',
   // TODO: cambia por tu correo de ventas
   email: 'ventas@myneg.do',
   trialDays: 14,

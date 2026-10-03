@@ -49,7 +49,7 @@ Los subtítulos ya vienen quemados en el video (el 85 % de los videos en redes s
 📅 Desde el 15 de noviembre de 2026 la DGII exige factura electrónica a los contribuyentes pequeños y micro. MyNeg ya está listo.
 
 👉 Prueba 14 días gratis: https://jrjosels.github.io/MyNeg_Page
-💬 Escríbenos por WhatsApp: https://wa.me/18090000000
+💬 Escríbenos por WhatsApp: https://wa.me/18093603722
 
 00:00 El problema
 00:20 MyNeg: la caja y el cuadre
