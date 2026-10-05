@@ -12,19 +12,19 @@ const features = [
   {
     icon: 'Calculator',
     title: 'Cuadre guiado',
-    text: 'Conteo por billetes, cierre a ciegas y faltantes con acuerdo firmado.',
+    text: 'Al cerrar se cuenta billete por billete; si falta algo, queda quién, cuánto y qué se acordó.',
     tone: 'teal',
   },
   {
     icon: 'PackageSearch',
     title: 'Pedido sugerido',
-    text: 'Igual de rápido con 50 que con 50,000 productos. Y con presupuesto.',
+    text: 'Te dice qué pedir y cuánto, según lo que vendes y el dinero que tienes.',
     tone: 'mango',
   },
   {
     icon: 'FileCode2',
     title: 'Compras desde el XML',
-    text: 'Arrastra el e-CF del proveedor: lo reconoce por su RNC y empareja los productos.',
+    text: 'Con la factura electrónica del proveedor, la compra se registra sola.',
     tone: 'blue',
   },
   {
@@ -37,7 +37,6 @@ const features = [
     icon: 'Bike',
     title: 'Delivery',
     text: 'Tablero por etapas, zonas con su cargo, rutas y liquidación del repartidor.',
-    size: 'tall',
     tone: 'mango',
   },
   {
@@ -74,17 +73,11 @@ const features = [
   {
     icon: 'Smartphone',
     title: 'En el celular',
-    text: 'Se instala como app, modo claro y oscuro, y buscador global con Ctrl K.',
+    text: 'Se instala como app en el celular: vende, cobra y revisa desde donde estés.',
     tone: 'coral',
   },
 ] as const;
 
-const stats = [
-  { n: 44, label: 'permisos ajustables' },
-  { n: 10, label: 'tipos de negocio con plantilla' },
-  { n: 24, suffix: ' h', label: 'entre respaldos automáticos' },
-  { n: 1, label: 'clic para descargar todos tus datos' },
-];
 ---
 
 <section class="section" id="modulos" data-scene="opacity:0.08" aria-labelledby="features-title">
@@ -111,17 +104,6 @@ const stats = [
       ))}
     </ul>
 
-    <dl class="stats">
-      {stats.map((s) => (
-        <div data-reveal>
-          <dt>{s.label}</dt>
-          <dd>
-            <span data-count={s.n}>{s.n}</span>
-            {'suffix' in s ? s.suffix : ''}
-          </dd>
-        </div>
-      ))}
-    </dl>
   </div>
 </section>
 

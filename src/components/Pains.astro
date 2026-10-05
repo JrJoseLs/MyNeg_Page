@@ -37,132 +37,57 @@ const pains = [
       <br />
       <span class="grad">Resueltos de una vez.</span>
     </h2>
-    <p class="lead" data-reveal>
-      Toca cada tarjeta y mira cómo lo resuelve MyNeg.
-    </p>
-
     <ul class="grid">
-      {pains.map((p, i) => (
-        <li data-reveal>
-          <button class="flip glow-card" aria-pressed="false" type="button">
-            <span class="face front">
-              <span class="num">0{i + 1}</span>
-              <span class="pain">{p.pain}</span>
-              <span class="hint">Ver la solución →</span>
-            </span>
-            <span class="face back">
-              <span class="num ok">✓ MyNeg</span>
-              <span class="fix">{p.fix}</span>
-            </span>
-          </button>
+      {pains.map((p) => (
+        <li class="card glow-card" data-reveal>
+          <p class="pain">{p.pain}</p>
+          <p class="fix">
+            <span class="ok" aria-hidden="true">✓</span>
+            {p.fix}
+          </p>
         </li>
       ))}
     </ul>
   </div>
 </section>
 
-<script>
-  document
-    .querySelectorAll<HTMLButtonElement>('.flip')
-    .forEach((b) =>
-      b.addEventListener('click', () =>
-        b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')),
-      ),
-    );
-</script>
-
 <style>
   .grid {
     list-style: none;
     padding: 0;
-    margin: 56px 0 0;
+    margin: 48px 0 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
-  .flip {
-    all: unset;
-    box-sizing: border-box;
-    display: grid;
-    width: 100%;
-    min-height: 230px;
-    cursor: pointer;
-    perspective: 1200px;
-    background: var(--card);
-    border-radius: var(--radius);
-  }
-  .flip:focus-visible {
-    outline: 2px solid var(--teal);
-  }
-  .face {
-    grid-area: 1 / 1;
+  .card {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: 28px;
-    transition:
-      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-      opacity 0.45s;
-    backface-visibility: hidden;
-  }
-  .back {
-    transform: rotateX(-90deg) translateY(30px);
-    opacity: 0;
-    background: linear-gradient(160deg, rgba(41, 151, 255, 0.14), rgba(62, 230, 210, 0.06));
-    border-radius: inherit;
-  }
-  .flip[aria-pressed='true'] .front,
-  .flip:hover .front {
-    transform: rotateX(90deg) translateY(-30px);
-    opacity: 0;
-  }
-  .flip[aria-pressed='true'] .back,
-  .flip:hover .back {
-    transform: none;
-    opacity: 1;
-  }
-  .num {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--coral);
-  }
-  .num.ok {
-    color: var(--green);
+    padding: 26px;
+    background: var(--card);
+    border-radius: var(--radius);
   }
   .pain {
+    margin: 0;
     font-family: var(--display);
-    font-size: 26px;
-    line-height: 1.12;
+    font-size: 23px;
+    line-height: 1.15;
     letter-spacing: -0.02em;
     font-weight: 650;
   }
   .fix {
-    font-size: 17px;
-    color: var(--text);
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
     line-height: 1.5;
+    color: var(--text-2);
   }
-  .hint {
-    margin-top: auto;
-    font-size: 14px;
-    color: var(--text-3);
-  }
-  @media (hover: none) {
-    .flip:hover .front {
-      transform: none;
-      opacity: 1;
-    }
-    .flip:hover .back {
-      transform: rotateX(-90deg) translateY(30px);
-      opacity: 0;
-    }
-    .flip[aria-pressed='true'] .front {
-      transform: rotateX(90deg) translateY(-30px);
-      opacity: 0;
-    }
-    .flip[aria-pressed='true'] .back {
-      transform: none;
-      opacity: 1;
-    }
+  .ok {
+    flex: none;
+    color: var(--green);
+    font-weight: 700;
   }
   @media (max-width: 900px) {
     .grid {
@@ -172,9 +97,6 @@ const pains = [
   @media (max-width: 600px) {
     .grid {
       grid-template-columns: 1fr;
-    }
-    .flip {
-      min-height: 190px;
     }
   }
 </style>

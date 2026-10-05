@@ -8,7 +8,7 @@ export const SITE = {
   tagline: 'Tu negocio, en orden. Hasta sin internet.',
   title: 'MyNeg — Sistema de caja, inventario y facturación electrónica para negocios en RD',
   description:
-    'Punto de venta, inventario, compras, e-CF de la DGII, 606/607, delivery, mesas, taller, nómina y contabilidad en un solo sistema. Funciona sin internet. Prueba 14 días gratis.',
+    'Sistema de caja y facturación para negocios en República Dominicana: comprobantes fiscales (NCF y e-CF), inventario, fiado, delivery y reportes 606/607. Funciona sin internet. Prueba 14 días gratis.',
   keywords: [
     'sistema de punto de venta República Dominicana',
     'facturación electrónica e-CF DGII',
@@ -184,7 +184,7 @@ export const FAQ = [
   },
   {
     q: '¿Emite facturación electrónica (e-CF) de la DGII?',
-    a: 'Sí. MyNeg arma el e-CF (E31, E32, E34), lo envía, guarda el código de seguridad e imprime el QR de la DGII en el recibo. Si la DGII no responde, la factura queda en contingencia y se reenvía sola. Desde el 15 de noviembre de 2026 los contribuyentes pequeños y micro están obligados a emitir e-CF.',
+    a: 'MyNeg arma tus e-CF (E31, E32 y E34), imprime el QR en el recibo y, si se cae la conexión, los guarda y los reenvía solo. Para emitirlos, cada negocio se autoriza como emisor electrónico ante la DGII y los envía por medio de un proveedor autorizado: te acompañamos en ese paso. Desde el 15 de noviembre de 2026 los pequeños, micro y no clasificados deben emitir e-CF.',
   },
   {
     q: '¿Sirve para mi tipo de negocio?',
@@ -196,7 +196,7 @@ export const FAQ = [
   },
   {
     q: '¿Mis empleados pueden ver mis costos y ganancias?',
-    a: 'Solo si tú lo permites. Hay 44 permisos editables; por ejemplo, la cajera vende sin ver costos, y los descuentos y anulaciones necesitan el PIN de un supervisor. Todo lo sensible queda en la auditoría.',
+    a: 'Solo si tú lo permites. Tú decides qué ve cada rol: por ejemplo, la cajera vende sin ver costos, y los descuentos y anulaciones necesitan la autorización del encargado. Todo lo sensible queda registrado con quién y cuándo.',
   },
   {
     q: '¿Saca el 606, el 607 y el ITBIS?',

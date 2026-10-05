@@ -23,7 +23,7 @@ npm run preview    # sirve dist/ como en producción
 | Animaciones de scroll | `src/scripts/main.ts` |
 | SEO (meta, Open Graph, JSON-LD) | `src/layouts/Base.astro` |
 | Video | `video/` (ver `video/PUBLICAR.md`) |
-| Manuales por rol | `privado/manuales/contenido.mjs` → `npm run manuales:pdf` |
+| Manuales por rol | Ya no van aquí: están dentro de MyNeg (menú → Ayuda), con video y PDF por rol. Se editan en `packages/shared/src/help.ts` del repositorio MyNeg (ver `tools/guias/README.md`). `privado/manuales/` queda como versión anterior. |
 
 > **Antes de publicar:** cambia el `email` en `src/config.ts` (hoy es de ejemplo) y revisa los precios, que son los de ejemplo de Plataforma → Planes.
 
