@@ -8,7 +8,7 @@ Sitio de presentación de [MyNeg](https://github.com/JrJoseLs/MyNeg), el sistema
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321/MyNeg_Page
+npm run dev        # http://localhost:4321
 npm run build      # revisa tipos y compila en dist/
 npm run preview    # sirve dist/ como en producción
 ```
@@ -39,7 +39,7 @@ npm run preview    # sirve dist/ como en producción
    git push -u origin main
    ```
 3. En GitHub: **Settings → Pages → Source: GitHub Actions**.
-4. Cada `push` a `main` publica solo en `https://jrjosels.github.io/MyNeg_Page/`.
+4. Cada `push` a `main` publica solo en `https://myneg.duckdns.org` (dominio en `public/CNAME`).
 
 **Dominio propio** (ej. `myneg.do`): agrega `public/CNAME` con el dominio, apunta el DNS a GitHub Pages y en `.github/workflows/deploy.yml` cambia `SITE_URL=https://myneg.do` y `BASE_PATH=/`. Actualiza también la línea `Sitemap:` de `public/robots.txt`.
 

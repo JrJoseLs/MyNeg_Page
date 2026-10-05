@@ -2,10 +2,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// GitHub Pages de proyecto: https://<usuario>.github.io/<repo>/
-// Con dominio propio, define SITE_URL=https://myneg.do y BASE_PATH=/ en el workflow.
-const site = process.env.SITE_URL ?? 'https://jrjosels.github.io';
-const base = process.env.BASE_PATH ?? '/MyNeg_Page';
+// Dominio propio: https://myneg.duckdns.org (ver public/CNAME).
+// Sin dominio, en GitHub Pages de proyecto: SITE_URL=https://<usuario>.github.io y BASE_PATH=/<repo>.
+const site = process.env.SITE_URL ?? 'https://myneg.duckdns.org';
+const base = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
   site,

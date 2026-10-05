@@ -4,7 +4,7 @@ import timeline from './timeline.json';
 
 const defaults: VideoProps = {
   // Cambia estos dos valores y vuelve a renderizar
-  url: 'jrjosels.github.io/MyNeg_Page',
+  url: 'myneg.duckdns.org',
   whatsapp: 'Escríbenos por WhatsApp',
 };
 

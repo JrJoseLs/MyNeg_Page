@@ -20,9 +20,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Con dominio propio: SITE_URL=https://myneg.do y BASE_PATH=/
-      SITE_URL: https://${{ github.repository_owner }}.github.io
-      BASE_PATH: /${{ github.event.repository.name }}
+      # Dominio propio (public/CNAME). Sin dominio: SITE_URL=https://<usuario>.github.io y BASE_PATH=/<repo>
+      SITE_URL: https://myneg.duckdns.org
+      BASE_PATH: /
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
