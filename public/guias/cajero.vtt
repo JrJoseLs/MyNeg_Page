@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:03.794 --> 00:00:10.015
+Al llegar, abre tu caja: escribe con cuánto efectivo empiezas.
+
+2
+00:00:10.015 --> 00:00:19.905
+Escanea el código de barras o escribe el nombre del producto.
+
+3
+00:00:19.905 --> 00:00:23.744
+Cada producto entra al ticket con su precio. Cambia la cantidad con + y −.
+
+4
+00:00:23.744 --> 00:00:28.680
+Cuando el cliente termine, toca Cobrar (o la tecla F12).
+
+5
+00:00:28.680 --> 00:00:33.350
+Elige cómo paga: efectivo, tarjeta, transferencia o crédito.
+
+6
+00:00:33.350 --> 00:00:39.443
+Toca con cuánto paga el cliente (o escríbelo): MyNeg calcula el cambio.
+
+7
+00:00:39.443 --> 00:00:45.779
+Venta completada: el recibo sale solo y te dice el cambio a devolver.
+
+8
+00:00:45.779 --> 00:00:50.764
+Al final del turno: Cerrar caja y cuadrar.
+
+9
+00:00:50.764 --> 00:00:55.453
+Cuenta tu efectivo billete por billete. Si algo no cuadra, MyNeg te ayuda a encontrarlo.

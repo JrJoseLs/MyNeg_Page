@@ -13,19 +13,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <nav aria-label="Principal">
       <ul>
         <li>
-          <a href="#como-funciona">Cómo funciona</a>
+          <a href={`${base}/#como-funciona`}>Cómo funciona</a>
         </li>
         <li>
-          <a href="#ecf">e-CF</a>
+          <a href={`${base}/#ecf`}>e-CF</a>
         </li>
         <li>
-          <a href="#roles">Roles</a>
+          <a href={`${base}/#roles`}>Roles</a>
         </li>
         <li>
-          <a href="#precios">Precios</a>
+          <a href={`${base}/#precios`}>Precios</a>
         </li>
         <li>
-          <a href="#preguntas">Preguntas</a>
+          <a href={`${base}/guias/`}>Guías</a>
+        </li>
+        <li>
+          <a href={`${base}/#preguntas`}>Preguntas</a>
         </li>
       </ul>
     </nav>

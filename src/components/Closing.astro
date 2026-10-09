@@ -86,9 +86,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </span>
     <span>© {new Date().getFullYear()} MyNeg · Hecho en República Dominicana</span>
     <nav aria-label="Pie de página">
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#precios">Precios</a>
-      <a href="#preguntas">Preguntas</a>
+      <a href={`${base}/#como-funciona`}>Cómo funciona</a>
+      <a href={`${base}/#precios`}>Precios</a>
+      <a href={`${base}/#preguntas`}>Preguntas</a>
     </nav>
   </div>
 </footer>

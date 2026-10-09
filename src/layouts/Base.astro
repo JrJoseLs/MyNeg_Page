@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { SITE, FAQ, PLANS } from '../config';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { title = SITE.title, description = SITE.description } = Astro.props as { title?: string; description?: string };
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(`${base}/og.png`, Astro.site).href;
 const videoUrl = new URL(`${base}/video/myneg-90s.mp4`, Astro.site).href;
@@ -68,8 +69,8 @@ const jsonLd = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{SITE.title}</title>
-    <meta name="description" content={SITE.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="keywords" content={SITE.keywords.join(', ')} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#05070d" />
@@ -79,7 +80,7 @@ const jsonLd = [
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={SITE.title} />
-    <meta property="og:description" content={SITE.description} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
@@ -87,7 +88,7 @@ const jsonLd = [
     <meta property="og:video" content={videoUrl} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={SITE.title} />
-    <meta name="twitter:description" content={SITE.description} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

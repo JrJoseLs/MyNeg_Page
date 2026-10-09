@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { waLink } from '../config';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Una guía por rol: el mismo video que se enlaza desde MyNeg → Ayuda (con su #clave) */
+const GUIDES = [
+  { key: 'dueno', name: 'Dueño', text: 'Tu negocio completo de un vistazo: ventas, equipo, permisos y reportes.' },
+  { key: 'gerente', name: 'Gerente', text: 'La operación del día: alertas, ventas, cierres de caja y desempeño.' },
+  { key: 'cajero', name: 'Cajera', text: 'Abrir la caja, vender, cobrar con el cambio exacto y cuadrar al final.' },
+  { key: 'vendedor', name: 'Vendedor', text: 'Armar el pedido en el piso desde el celular y mandarlo a caja.' },
+  { key: 'almacenista', name: 'Almacenista', text: 'Qué pedir, registrar compras (también con el XML) y contar.' },
+  { key: 'contador', name: 'Contador', text: 'ITBIS, 606 y 607 listos, y la contabilidad que se arma sola.' },
+  { key: 'mesero', name: 'Mesero', text: 'Abrir la mesa, anotar, mandar a cocina y pedir la cuenta.' },
+  { key: 'cocina', name: 'Cocina', text: 'Las comandas en orden, con reloj, y marcar lo que está listo.' },
+  { key: 'repartidor', name: 'Repartidor', text: 'Sus entregas en el celular: dirección, cobro, cambio y entregado.' },
+  { key: 'tecnico', name: 'Técnico', text: 'Recibir equipos, presupuestar, reparar y avisar al cliente.' },
+  { key: 'produccion', name: 'Producción', text: 'Recetas, cuántos puedes hacer y registrar lo producido.' },
+];
+---
+
+<Base title="Guías de MyNeg — Aprende tu parte en 90 segundos" description="Videos cortos de MyNeg para cada rol: dueño, cajera, vendedor, almacenista, contador, mesero, cocina, repartidor, técnico y producción.">
+  <Nav />
+  <main id="contenido" class="guias">
+    <section class="wrap head">
+      <span class="eyebrow">Guías</span>
+      <h1 class="h2">Cada quien aprende su parte.<br /><span class="grad">En 90 segundos.</span></h1>
+      <p class="lead">Un video corto para cada rol, grabado con el sistema real. Dentro de MyNeg, en el menú → Ayuda, cada persona tiene además su paso a paso y su guía en PDF.</p>
+    </section>
+    <section class="wrap">
+      <ul class="grid">
+        {GUIDES.map((g) => (
+          <li id={g.key} class="card">
+            <video controls preload="none" playsinline poster={`${base}/guias/${g.key}.jpg`} aria-label={`Guía de ${g.name}`}>
+              <source src={`${base}/guias/${g.key}.mp4`} type="video/mp4" />
+              <track kind="captions" srclang="es" label="Español" src={`${base}/guias/${g.key}.vtt`} />
+            </video>
+            <h2>{g.name}</h2>
+            <p>{g.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="cta">
+        ¿Quieres verlo con tu negocio? <a class="btn btn-primary" href={waLink('Hola, vi las guías de MyNeg y quiero una demo para mi negocio.')} target="_blank" rel="noopener">Pide tu demo por WhatsApp</a>
+      </p>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .guias {
+    padding: 140px 0 80px;
+  }
+  .head {
+    margin-bottom: 40px;
+  }
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 12px 12px 18px;
+    scroll-margin-top: 110px;
+  }
+  .card:target {
+    outline: 2px solid var(--teal);
+  }
+  video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    background: #000;
+    display: block;
+  }
+  h2 {
+    font-family: var(--display);
+    font-size: 20px;
+    margin: 14px 6px 4px;
+  }
+  p {
+    margin: 0 6px;
+    color: var(--text-2);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .cta {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    font-size: 17px;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .guias {
+      padding-top: 110px;
+    }
+  }
+</style>
