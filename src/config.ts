@@ -26,6 +26,14 @@ export const SITE = {
   email: 'ventas@myneg.do',
   trialDays: 14,
   ecfDeadline: '2026-11-15',
+  instagram: 'https://www.instagram.com/seshat.tech/',
+};
+
+/** La empresa detrás de MyNeg (y de los demás productos) */
+export const COMPANY = {
+  name: 'Seshat Technologies',
+  slogan: 'Cada registro cuenta.',
+  instagram: SITE.instagram,
 };
 
 export const waLink = (text: string) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
@@ -73,6 +81,41 @@ export const PLANS = [
     ],
   },
 ];
+
+/**
+ * Negocios que usan MyNeg (sección «Clientes»). Solo clientes reales y con su permiso para
+ * mostrar el nombre y el logo. Mientras la lista esté vacía, la sección no aparece.
+ *
+ * logo: archivo dentro de public/clientes/ (PNG, SVG o WebP, idealmente cuadrado o con fondo
+ * transparente). Sin logo se muestran sus iniciales.
+ *
+ * Ejemplo:
+ *   {
+ *     name: 'Ferretería La Económica',
+ *     type: 'Ferretería',
+ *     city: 'Santiago',
+ *     since: '2026',
+ *     logo: 'ferreteria-la-economica.png',
+ *     quote: 'Ahora cuadro la caja en cinco minutos.',
+ *     author: 'Juan Pérez, dueño',
+ *     link: 'https://www.instagram.com/...',
+ *   },
+ */
+export interface Client {
+  name: string;
+  /** Uno de BUSINESS_TYPES (o el que corresponda) */
+  type: string;
+  city?: string;
+  /** Desde cuándo usa MyNeg, ej. '2026' */
+  since?: string;
+  logo?: string;
+  quote?: string;
+  author?: string;
+  /** Su Instagram o página web */
+  link?: string;
+}
+
+export const CLIENTS: Client[] = [];
 
 export const BUSINESS_TYPES = [
   'Ferretería',
@@ -184,7 +227,7 @@ export const FAQ = [
   },
   {
     q: '¿Emite facturación electrónica (e-CF) de la DGII?',
-    a: 'MyNeg arma tus e-CF (E31, E32 y E34), imprime el QR en el recibo y, si se cae la conexión, los guarda y los reenvía solo. Para emitirlos, cada negocio se autoriza como emisor electrónico ante la DGII y los envía por medio de un proveedor autorizado: te acompañamos en ese paso. Desde el 15 de noviembre de 2026 los pequeños, micro y no clasificados deben emitir e-CF.',
+    a: 'Sí. MyNeg arma tus e-CF (crédito fiscal, consumo, notas de crédito y débito, compras, gastos menores, regímenes especiales y gubernamentales), los firma con el certificado digital de tu negocio y los envía directo a la DGII, sin intermediarios. Imprime el QR en el recibo, si se cae la conexión los guarda y los reenvía solo, y recibe los e-CF que te mandan tus proveedores. Tu negocio solo tiene que certificarse como emisor electrónico ante la DGII: te acompañamos en ese paso. Desde el 15 de noviembre de 2026 los pequeños, micro y no clasificados deben emitir e-CF.',
   },
   {
     q: '¿Sirve para mi tipo de negocio?',

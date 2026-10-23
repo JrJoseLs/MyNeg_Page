@@ -15,8 +15,9 @@ import Icon from './Icon.astro';
       </h2>
       <p class="lead">
         Desde el <strong>15 de noviembre de 2026</strong> los contribuyentes pequeños, micro y no clasificados deben emitir
-        comprobantes fiscales electrónicos. MyNeg ya arma tus e-CF (E31, E32 y E34), imprime el QR y, si se cae la conexión,
-        los guarda y los reenvía solo. Te acompañamos en la autorización ante la DGII.
+        comprobantes fiscales electrónicos. MyNeg arma tus e-CF, los firma con <strong>tu propio certificado digital</strong> y los
+        envía directo a la DGII, sin pagarle a un intermediario. Imprime el QR, si se cae la conexión los guarda y los reenvía solo, y
+        recibe los e-CF de tus proveedores. Te acompañamos en la certificación ante la DGII.
       </p>
 
       <div class="countdown" id="countdown" data-deadline={`${SITE.ecfDeadline}T00:00:00-04:00`} aria-live="off">
@@ -44,10 +45,17 @@ import Icon from './Icon.astro';
       <div class="chips">
         <span>E31 Crédito fiscal</span>
         <span>E32 Consumo</span>
+        <span>E33 Nota de débito</span>
         <span>E34 Nota de crédito</span>
+        <span>E41 Compras</span>
+        <span>E43 Gastos menores</span>
+        <span>E44 Regímenes especiales</span>
+        <span>E45 Gubernamental</span>
+        <span>Firma con tu certificado</span>
         <span>QR DGII</span>
         <span>Contingencia automática</span>
-        <span>Compras desde XML</span>
+        <span>Anulación de e-CF</span>
+        <span>Recepción de e-CF de proveedores</span>
       </div>
       <a
         class="btn btn-primary"

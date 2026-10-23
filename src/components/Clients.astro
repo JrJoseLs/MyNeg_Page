@@ -1,0 +1,202 @@
+---
+import { CLIENTS } from '../config';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Los tipos de negocio que ya confían en MyNeg, de más a menos
+const types = Object.entries(
+  CLIENTS.reduce<Record<string, number>>((acc, c) => ({ ...acc, [c.type]: (acc[c.type] ?? 0) + 1 }), {}),
+).sort((a, b) => b[1] - a[1]);
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter((w) => w.length > 2)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('') || name.slice(0, 2).toUpperCase();
+const withQuote = CLIENTS.filter((c) => c.quote);
+---
+
+{
+  CLIENTS.length > 0 && (
+    <section class="section" id="clientes" data-scene="opacity:0.1" aria-labelledby="clientes-title">
+      <div class="wrap">
+        <span class="eyebrow" data-reveal>
+          Clientes
+        </span>
+        <h2 class="h2" id="clientes-title" data-reveal>
+          Negocios reales,
+          <br />
+          <span class="grad">ya en orden.</span>
+        </h2>
+        <p class="lead" data-reveal>
+          {CLIENTS.length === 1 ? 'Un negocio dominicano ya trabaja' : `${CLIENTS.length} negocios dominicanos ya trabajan`} con MyNeg todos los días.
+        </p>
+
+        {types.length > 1 && (
+          <div class="types" data-reveal>
+            {types.map(([t, n]) => (
+              <span>
+                {t} <b>{n}</b>
+              </span>
+            ))}
+          </div>
+        )}
+
+        <ul class="grid" data-reveal>
+          {CLIENTS.map((c) => {
+            const Tag = c.link ? 'a' : 'div';
+            return (
+              <li>
+                <Tag class="client glow-card" {...(c.link ? { href: c.link, target: '_blank', rel: 'noopener' } : {})}>
+                  <div class="logo">
+                    {c.logo ? (
+                      <img src={`${base}/clientes/${c.logo}`} alt={`Logo de ${c.name}`} loading="lazy" decoding="async" width="72" height="72" />
+                    ) : (
+                      <span aria-hidden="true">{initials(c.name)}</span>
+                    )}
+                  </div>
+                  <div class="info">
+                    <b>{c.name}</b>
+                    <span class="type">{c.type}</span>
+                    {(c.city || c.since) && (
+                      <span class="meta">
+                        {[c.city, c.since && `con MyNeg desde ${c.since}`].filter(Boolean).join(' · ')}
+                      </span>
+                    )}
+                  </div>
+                </Tag>
+              </li>
+            );
+          })}
+        </ul>
+
+        {withQuote.length > 0 && (
+          <div class="quotes" data-reveal>
+            {withQuote.map((c) => (
+              <figure class="glow-card">
+                <blockquote>«{c.quote}»</blockquote>
+                <figcaption>
+                  {c.author ?? c.name}
+                  {c.author && <span> · {c.name}</span>}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .types span {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: var(--text-2);
+    background: var(--card);
+  }
+  .types b {
+    color: var(--text);
+    font-family: var(--mono);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .client {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 18px;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  .logo {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+  }
+  .logo span {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 24px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .info b {
+    font-family: var(--display);
+    font-size: 17px;
+    line-height: 1.25;
+  }
+  .type {
+    align-self: flex-start;
+    font-size: 12.5px;
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .meta {
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .quotes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+  }
+  figure {
+    margin: 0;
+    padding: 22px;
+  }
+  blockquote {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 19px;
+    line-height: 1.4;
+  }
+  figcaption {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  figcaption span {
+    color: var(--text-3);
+  }
+</style>

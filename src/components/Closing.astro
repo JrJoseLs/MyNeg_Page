@@ -1,5 +1,5 @@
 ---
-import { FAQ, SITE, waLink } from '../config';
+import { COMPANY, FAQ, SITE, waLink } from '../config';
 import Icon from './Icon.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -75,6 +75,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a class="btn btn-ghost" href={`mailto:${SITE.email}`}>
         {SITE.email}
       </a>
+      <a class="btn btn-ghost" href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram de Seshat Technologies">
+        <svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"></circle></svg>
+        @seshat.tech
+      </a>
     </div>
   </div>
 </section>
@@ -84,11 +88,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <span class="brand">
       <img src={`${base}/favicon.svg`} alt="" width="22" height="22" /> MyNeg
     </span>
-    <span>© {new Date().getFullYear()} MyNeg · Hecho en República Dominicana</span>
+    <span>© {new Date().getFullYear()} MyNeg, un producto de <a class="company" href={COMPANY.instagram} target="_blank" rel="noopener">{COMPANY.name}</a> · Hecho en República Dominicana</span>
     <nav aria-label="Pie de página">
       <a href={`${base}/#como-funciona`}>Cómo funciona</a>
       <a href={`${base}/#precios`}>Precios</a>
       <a href={`${base}/#preguntas`}>Preguntas</a>
+      <a class="ig" href={COMPANY.instagram} target="_blank" rel="noopener" aria-label="Instagram de Seshat Technologies">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"></circle></svg>
+        Instagram
+      </a>
     </nav>
   </div>
 </footer>
@@ -227,6 +235,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   footer a:hover {
     color: var(--text);
+  }
+  footer .company {
+    color: var(--text-2, var(--text));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  footer .ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
   @media (max-width: 860px) {
     .faq-wrap {
