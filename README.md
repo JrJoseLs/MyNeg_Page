@@ -15,15 +15,15 @@ npm run preview    # sirve dist/ como en producción
 
 ## Qué se cambia dónde
 
-| Quiero cambiar… | Archivo |
-|---|---|
-| WhatsApp, correo, precios, preguntas, roles | `src/config.ts` |
-| Textos e imágenes de una sección | `src/components/*.astro` |
-| Formas 3D (logo, recibo, cajas, red, gráfico) | `src/scripts/scene.ts` |
-| Animaciones de scroll | `src/scripts/main.ts` |
-| SEO (meta, Open Graph, JSON-LD) | `src/layouts/Base.astro` |
-| Video | `video/` (ver `video/PUBLICAR.md`) |
-| Manuales por rol | Ya no van aquí: están dentro de MyNeg (menú → Ayuda), con video y PDF por rol. Se editan en `packages/shared/src/help.ts` del repositorio MyNeg (ver `tools/guias/README.md`). `privado/manuales/` queda como versión anterior. |
+| Quiero cambiar…                               | Archivo                                                                                                                                                                                                                         |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WhatsApp, correo, precios, preguntas, roles   | `src/config.ts`                                                                                                                                                                                                                 |
+| Textos e imágenes de una sección              | `src/components/*.astro`                                                                                                                                                                                                        |
+| Formas 3D (logo, recibo, cajas, red, gráfico) | `src/scripts/scene.ts`                                                                                                                                                                                                          |
+| Animaciones de scroll                         | `src/scripts/main.ts`                                                                                                                                                                                                           |
+| SEO (meta, Open Graph, JSON-LD)               | `src/layouts/Base.astro`                                                                                                                                                                                                        |
+| Video                                         | `video/` (ver `video/PUBLICAR.md`)                                                                                                                                                                                              |
+| Manuales por rol                              | Ya no van aquí: están dentro de MyNeg (menú → Ayuda), con video y PDF por rol. Se editan en `packages/shared/src/help.ts` del repositorio MyNeg (ver `tools/guias/README.md`). `privado/manuales/` queda como versión anterior. |
 
 > **Antes de publicar:** cambia el `email` en `src/config.ts` (hoy es de ejemplo) y revisa los precios, que son los de ejemplo de Plataforma → Planes.
 
@@ -73,3 +73,18 @@ public/              favicon, og.png, video/, robots.txt
 video/               proyecto Remotion (voz, música, escenas)
 privado/             manuales por rol (no se publica)
 ```
+
+## Editor local del contenido
+
+```bash
+npm run admin
+```
+
+Abre **http://127.0.0.1:4322**. Desde ahí cambias el contacto, los **clientes** (con su logo), los planes, las
+preguntas, los tipos de negocio y los roles; la vista previa (http://127.0.0.1:4321) se actualiza al guardar. En
+**Publicar** se revisa que la página compile y se hace `git commit` + `git push`: GitHub Actions la sube a GitHub
+Pages en uno o dos minutos.
+
+- Todo el contenido vive en `src/data/sitio.json` (también se puede editar a mano).
+- Los logos se guardan en `public/clientes/`; los que ya no usa ningún cliente se borran al guardar.
+- El editor solo escucha en este equipo y nunca se publica (el sitio es solo `dist/`).

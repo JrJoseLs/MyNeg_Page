@@ -6,6 +6,7 @@
   "description": "Landing page de MyNeg: sistema de gestión para negocios en República Dominicana.",
   "scripts": {
     "dev": "astro dev",
+    "admin": "node admin/server.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "format": "prettier --write .",

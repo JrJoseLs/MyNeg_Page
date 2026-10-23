@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Editor de la landing · MyNeg</title>
+    <style>
+      :root {
+        --bg: #05070d;
+        --bg2: #0b1020;
+        --card: #111829;
+        --line: rgba(255, 255, 255, 0.1);
+        --text: #f4f6fb;
+        --t2: rgba(226, 232, 245, 0.72);
+        --t3: rgba(226, 232, 245, 0.48);
+        --blue: #2997ff;
+        --teal: #3ee6d2;
+        --red: #ff5a5f;
+        --green: #34d399;
+        --r: 14px;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.5 Inter,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 20px;
+        background: rgba(5, 7, 13, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      header h1 {
+        font-size: 17px;
+        margin: 0 auto 0 0;
+      }
+      header h1 small {
+        color: var(--t3);
+        font-weight: 400;
+        margin-left: 6px;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 12px 20px 0;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      nav button {
+        background: none;
+        border: 1px solid transparent;
+        color: var(--t2);
+        padding: 7px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font: inherit;
+      }
+      nav button.on {
+        background: var(--card);
+        border-color: var(--line);
+        color: var(--text);
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px 20px 80px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+      }
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--t2);
+      }
+      label.wide {
+        grid-column: 1/-1;
+      }
+      input,
+      textarea,
+      select {
+        font: inherit;
+        color: var(--text);
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 10px;
+        width: 100%;
+      }
+      textarea {
+        min-height: 70px;
+        resize: vertical;
+      }
+      input[type='checkbox'] {
+        width: auto;
+      }
+      .check {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn {
+        font: inherit;
+        font-weight: 600;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--text);
+        padding: 8px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .btn:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      .btn.pri {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .btn.pri:disabled {
+        opacity: 0.45;
+        cursor: default;
+      }
+      .btn.sm {
+        padding: 4px 9px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .btn.danger {
+        color: var(--red);
+      }
+      .row-head {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .row-head b {
+        margin-right: auto;
+      }
+      .hint {
+        color: var(--t3);
+        font-size: 13px;
+        margin: 0 0 12px;
+      }
+      .logo {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .logo .box {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        background: #fff;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        flex-shrink: 0;
+        color: #0058b9;
+        font-weight: 800;
+      }
+      .logo .box img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 6px;
+      }
+      pre {
+        white-space: pre-wrap;
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 12.5px;
+        max-height: 360px;
+        overflow: auto;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: var(--bg);
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        opacity: 0;
+        transition: 0.2s;
+        pointer-events: none;
+        white-space: pre-line;
+        max-width: 90vw;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+      .toast.err {
+        background: var(--red);
+        color: #fff;
+      }
+      .dirty {
+        color: var(--teal);
+        font-size: 13px;
+      }
+      iframe {
+        width: 100%;
+        height: 75vh;
+        border: 1px solid var(--line);
+        border-radius: var(--r);
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Editor de la landing <small>MyNeg · solo en este equipo</small></h1>
+      <span class="dirty" id="dirty" hidden>Cambios sin guardar</span>
+      <a class="btn" href="http://127.0.0.1:4321" target="_blank" rel="noopener">Ver la página</a>
+      <button class="btn pri" id="save" disabled>Guardar</button>
+    </header>
+    <nav id="tabs"></nav>
+    <main id="view"></main>
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const H = { 'x-editor': 'myneg' };
+      let data = null;
+      let tab = localStorage.getItem('editor-tab') || 'clientes';
+      const $ = (s, el = document) => el.querySelector(s);
+      const esc = (v) =>
+        String(v ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+      function toast(msg, err) {
+        const t = $('#toast');
+        t.textContent = msg;
+        t.className = 'toast show' + (err ? ' err' : '');
+        clearTimeout(toast.t);
+        toast.t = setTimeout(() => (t.className = 'toast'), err ? 6000 : 2200);
+      }
+      function dirty(on = true) {
+        $('#save').disabled = !on;
+        $('#dirty').hidden = !on;
+      }
+      window.addEventListener('beforeunload', (e) => {
+        if (!$('#save').disabled) e.preventDefault();
+      });
+
+      // ── Campos de cada lista ──
+      const lines = {
+        toUI: (v) => (v || []).join('\n'),
+        fromUI: (v) =>
+          v
+            .split('\n')
+            .map((x) => x.trim())
+            .filter(Boolean),
+      };
+      const LISTS = {
+        clientes: {
+          title: 'Clientes',
+          item: 'Cliente',
+          hint: 'Solo clientes reales y con su permiso. La sección aparece en la página cuando hay al menos uno.',
+          blank: () => ({ name: '', type: '', city: '', since: String(new Date().getFullYear()) }),
+          label: (c) => c.name || 'Cliente nuevo',
+          fields: [
+            { k: 'name', l: 'Nombre del negocio' },
+            { k: 'type', l: 'Tipo de negocio', list: () => data.tiposDeNegocio },
+            { k: 'city', l: 'Ciudad' },
+            { k: 'since', l: 'Con MyNeg desde (año)' },
+            { k: 'logo', l: 'Logo', logo: true },
+            { k: 'link', l: 'Instagram o web (opcional)' },
+            { k: 'quote', l: 'Testimonio (opcional)', area: true, wide: true },
+            { k: 'author', l: 'Quién lo dice (ej. Juan Pérez, dueño)' },
+          ],
+        },
+        planes: {
+          title: 'Planes',
+          item: 'Plan',
+          hint: 'Los precios en RD$ al mes. Mantenlos iguales a Plataforma → Planes en MyNeg.',
+          blank: () => ({ name: '', price: 0, branch: 0, pitch: '', features: [] }),
+          label: (p) => `${p.name || 'Plan nuevo'} · RD$ ${p.price}`,
+          fields: [
+            { k: 'name', l: 'Nombre' },
+            { k: 'price', l: 'Precio al mes (RD$)', num: true },
+            { k: 'branch', l: 'Sucursal adicional (RD$)', num: true },
+            { k: 'featured', l: 'Destacado (el recomendado)', bool: true },
+            { k: 'pitch', l: 'Para quién es', area: true, wide: true },
+            { k: 'features', l: 'Qué incluye (uno por línea)', area: true, wide: true, ...lines },
+          ],
+        },
+        preguntas: {
+          title: 'Preguntas frecuentes',
+          item: 'Pregunta',
+          hint: 'También salen en Google como preguntas frecuentes.',
+          blank: () => ({ q: '', a: '' }),
+          label: (f) => f.q || 'Pregunta nueva',
+          fields: [
+            { k: 'q', l: 'Pregunta', wide: true },
+            { k: 'a', l: 'Respuesta', area: true, wide: true },
+          ],
+        },
+        roles: {
+          title: 'Roles',
+          item: 'Rol',
+          hint: 'Lo que ve y hace cada persona del negocio (sección «Roles»).',
+          blank: () => ({ name: '', sees: '', can: [], cannot: [] }),
+          label: (r) => r.name || 'Rol nuevo',
+          fields: [
+            { k: 'name', l: 'Rol' },
+            { k: 'sees', l: 'Qué ve', wide: true },
+            { k: 'can', l: 'Puede (uno por línea)', area: true, ...lines },
+            { k: 'cannot', l: 'No puede (uno por línea)', area: true, ...lines },
+          ],
+        },
+      };
+      const TABS = [
+        ['clientes', 'Clientes'],
+        ['general', 'General'],
+        ['planes', 'Planes'],
+        ['preguntas', 'Preguntas'],
+        ['tipos', 'Tipos de negocio'],
+        ['roles', 'Roles'],
+        ['vista', 'Vista previa'],
+        ['publicar', 'Publicar'],
+      ];
+
+      function renderTabs() {
+        $('#tabs').innerHTML = TABS.map(
+          ([k, l]) => `<button data-tab="${k}" class="${k === tab ? 'on' : ''}">${l}</button>`,
+        ).join('');
+      }
+      $('#tabs').addEventListener('click', (e) => {
+        const k = e.target.dataset.tab;
+        if (!k) return;
+        tab = k;
+        localStorage.setItem('editor-tab', k);
+        render();
+      });
+
+      function field(f, value, path) {
+        const attrs = `data-path="${path}" data-k="${f.k}"${f.num ? ' data-num="1"' : ''}${f.toUI ? ' data-lines="1"' : ''}`;
+        const shown = f.toUI ? f.toUI(value) : (value ?? '');
+        if (f.bool)
+          return `<label class="check"><input type="checkbox" ${attrs} ${value ? 'checked' : ''}>${f.l}</label>`;
+        if (f.logo) {
+          return `<label>${f.l}<span class="logo"><span class="box">${value ? `<img src="/clientes/${esc(value)}" alt="">` : '—'}</span>
+      <span><input type="file" accept=".png,.jpg,.jpeg,.webp,.svg" data-logo="${path}"><br>
+      ${value ? `<button type="button" class="btn sm danger" data-nologo="${path}">Quitar logo</button>` : '<span class="hint">PNG, SVG o WebP, mejor cuadrado</span>'}</span></span></label>`;
+        }
+        const list = f.list
+          ? `<datalist id="dl-${f.k}">${f
+              .list()
+              .map((o) => `<option value="${esc(o)}">`)
+              .join('')}</datalist>`
+          : '';
+        const input = f.area
+          ? `<textarea ${attrs}>${esc(shown)}</textarea>`
+          : `<input ${attrs} ${f.num ? 'type="number" min="0"' : ''} value="${esc(shown)}" ${f.list ? `list="dl-${f.k}"` : ''}>`;
+        return `<label class="${f.wide ? 'wide' : ''}">${f.l}${input}${list}</label>`;
+      }
+
+      function renderList(key) {
+        const def = LISTS[key];
+        const items = data[key];
+        return `<div class="row-head"><b>${def.title} (${items.length})</b><button class="btn" data-add="${key}">+ ${def.item}</button></div>
+    <p class="hint">${def.hint}</p>
+    ${items.length ? '' : `<div class="card hint">Todavía no hay ninguno.</div>`}
+    ${items
+      .map(
+        (it, i) => `<div class="card">
+      <div class="row-head"><b>${esc(def.label(it))}</b>
+        <button class="btn sm" data-move="${key}:${i}:-1" ${i === 0 ? 'disabled' : ''}>↑</button>
+        <button class="btn sm" data-move="${key}:${i}:1" ${i === items.length - 1 ? 'disabled' : ''}>↓</button>
+        <button class="btn sm danger" data-del="${key}:${i}">Quitar</button></div>
+      <div class="grid">${def.fields.map((f) => field(f, it[f.k], `${key}.${i}`)).join('')}</div></div>`,
+      )
+      .join('')}`;
+      }
+
+      function renderGeneral() {
+        const s = data.sitio;
+        const f = (k, l, extra = {}) => field({ k, l, ...extra }, s[k], 'sitio');
+        return `<div class="card"><div class="row-head"><b>Contacto</b></div><div class="grid">
+      ${f('whatsapp', 'WhatsApp (solo números, con 1 adelante)')}
+      ${f('email', 'Correo de ventas')}
+      ${f('instagram', 'Instagram')}
+      ${f('trialDays', 'Días de prueba gratis', { num: true })}
+      ${f('ecfDeadline', 'Fecha límite del e-CF (AAAA-MM-DD)')}
+    </div></div>
+    <div class="card"><div class="row-head"><b>Lo que ve Google</b></div><div class="grid">
+      ${f('name', 'Nombre')}
+      ${f('tagline', 'Frase principal')}
+      ${f('title', 'Título de la página (pestaña y Google)', { wide: true })}
+      ${f('description', 'Descripción (Google y al compartir)', { area: true, wide: true })}
+      ${f('keywords', 'Palabras clave (una por línea)', { area: true, wide: true, ...lines })}
+    </div></div>
+    <div class="card"><div class="row-head"><b>La empresa</b></div><div class="grid">
+      ${field({ k: 'name', l: 'Empresa' }, data.empresa.name, 'empresa')}
+      ${field({ k: 'slogan', l: 'Eslogan' }, data.empresa.slogan, 'empresa')}
+    </div></div>`;
+      }
+
+      async function renderPublish() {
+        const view = $('#view');
+        view.innerHTML = `<div class="card"><div class="row-head"><b>Publicar en la web</b></div>
+    <p class="hint">Revisa que la página compile, hace el commit y el git push. GitHub publica la página en uno o dos minutos.</p>
+    <div class="grid"><label class="wide">Qué cambiaste<input id="msg" placeholder="Ej.: agrega a Ferretería La Económica"></label></div>
+    <p><button class="btn pri" id="publish">Publicar</button></p>
+    <pre id="log">Cargando el estado…</pre></div>`;
+        const st = await fetch('/api/status', { headers: H }).then((r) => r.json());
+        $('#log').textContent = `${st.status}\n\nÚltima publicación: ${st.last}`;
+        $('#publish').onclick = async () => {
+          if (!$('#save').disabled) return toast('Primero guarda los cambios', true);
+          const b = $('#publish');
+          b.disabled = true;
+          b.textContent = 'Publicando… (compilando la página)';
+          const r = await fetch('/api/publish', {
+            method: 'POST',
+            headers: { ...H, 'content-type': 'application/json' },
+            body: JSON.stringify({ message: $('#msg').value }),
+          });
+          const out = await r.json();
+          $('#log').textContent = out.log || out.error;
+          b.disabled = false;
+          b.textContent = 'Publicar';
+          toast(r.ok ? 'Subido. En uno o dos minutos está en la web.' : out.error, !r.ok);
+        };
+      }
+
+      function render() {
+        renderTabs();
+        const view = $('#view');
+        if (tab === 'publicar') return renderPublish();
+        if (tab === 'vista') {
+          view.innerHTML = `<p class="hint">Se actualiza sola al guardar. <a class="btn sm" href="http://127.0.0.1:4321" target="_blank">Abrir en otra pestaña</a></p><iframe src="http://127.0.0.1:4321" title="Vista previa"></iframe>`;
+          return;
+        }
+        if (tab === 'general') view.innerHTML = renderGeneral();
+        else if (tab === 'tipos') {
+          view.innerHTML = `<div class="card"><div class="row-head"><b>Tipos de negocio</b></div><p class="hint">Salen en la portada y como opciones al agregar un cliente.</p>
+      <div class="grid">${field({ k: 'tiposDeNegocio', l: 'Uno por línea', area: true, wide: true, ...lines }, data.tiposDeNegocio, 'root')}</div></div>`;
+        } else view.innerHTML = renderList(tab);
+      }
+
+      // ── Cambios ──
+      function target(path) {
+        if (path === 'root') return data;
+        const [key, i] = path.split('.');
+        return i === undefined ? data[key] : data[key][Number(i)];
+      }
+      $('#view').addEventListener('input', (e) => {
+        const el = e.target;
+        if (!el.dataset.path) return;
+        const obj = target(el.dataset.path);
+        let v = el.type === 'checkbox' ? el.checked : el.value;
+        if (el.dataset.num) v = Number(v);
+        if (el.dataset.lines) v = lines.fromUI(v);
+        obj[el.dataset.k] = v;
+        dirty();
+      });
+      $('#view').addEventListener('change', async (e) => {
+        const el = e.target;
+        if (!el.dataset.logo || !el.files[0]) return;
+        const file = el.files[0];
+        const r = await fetch('/api/logo', { method: 'POST', headers: { ...H, 'x-filename': encodeURIComponent(file.name) }, body: file });
+        const out = await r.json();
+        if (!r.ok) return toast(out.error, true);
+        target(el.dataset.logo).logo = out.file;
+        dirty();
+        render();
+      });
+      $('#view').addEventListener('click', (e) => {
+        const b = e.target.closest('button');
+        if (!b) return;
+        if (b.dataset.add) {
+          data[b.dataset.add].push(LISTS[b.dataset.add].blank());
+          dirty();
+          render();
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        } else if (b.dataset.del) {
+          const [k, i] = b.dataset.del.split(':');
+          if (!confirm(`¿Quitar «${LISTS[k].label(data[k][i])}»?`)) return;
+          data[k].splice(Number(i), 1);
+          dirty();
+          render();
+        } else if (b.dataset.move) {
+          const [k, i, d] = b.dataset.move.split(':');
+          const a = data[k],
+            x = Number(i),
+            y = x + Number(d);
+          [a[x], a[y]] = [a[y], a[x]];
+          dirty();
+          render();
+        } else if (b.dataset.nologo) {
+          delete target(b.dataset.nologo).logo;
+          dirty();
+          render();
+        }
+      });
+
+      $('#save').onclick = async () => {
+        const r = await fetch('/api/data', {
+          method: 'PUT',
+          headers: { ...H, 'content-type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const out = await r.json();
+        if (!r.ok) return toast(out.error, true);
+        dirty(false);
+        toast('Guardado. La vista previa ya lo muestra.');
+      };
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          e.preventDefault();
+          if (!$('#save').disabled) $('#save').click();
+        }
+      });
+
+      fetch('/api/data', { headers: H })
+        .then((r) => r.json())
+        .then((d) => {
+          data = d;
+          render();
+        });
+    </script>
+  </body>
+</html>

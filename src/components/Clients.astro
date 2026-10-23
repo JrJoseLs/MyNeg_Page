@@ -16,77 +16,85 @@ const initials = (name: string) =>
 const withQuote = CLIENTS.filter((c) => c.quote);
 ---
 
-{
-  CLIENTS.length > 0 && (
-    <section class="section" id="clientes" data-scene="opacity:0.1" aria-labelledby="clientes-title">
-      <div class="wrap">
-        <span class="eyebrow" data-reveal>
-          Clientes
-        </span>
-        <h2 class="h2" id="clientes-title" data-reveal>
-          Negocios reales,
-          <br />
-          <span class="grad">ya en orden.</span>
-        </h2>
-        <p class="lead" data-reveal>
-          {CLIENTS.length === 1 ? 'Un negocio dominicano ya trabaja' : `${CLIENTS.length} negocios dominicanos ya trabajan`} con MyNeg todos los días.
-        </p>
+{CLIENTS.length > 0 && (
+  <section class="section" id="clientes" data-scene="opacity:0.1" aria-labelledby="clientes-title">
+    <div class="wrap">
+      <span class="eyebrow" data-reveal>
+        Clientes
+      </span>
+      <h2 class="h2" id="clientes-title" data-reveal>
+        Negocios reales,
+        <br />
+        <span class="grad">ya en orden.</span>
+      </h2>
+      <p class="lead" data-reveal>
+        {CLIENTS.length === 1
+          ? 'Un negocio dominicano ya trabaja'
+          : `${CLIENTS.length} negocios dominicanos ya trabajan`}{' '}
+        con MyNeg todos los días.
+      </p>
 
-        {types.length > 1 && (
-          <div class="types" data-reveal>
-            {types.map(([t, n]) => (
-              <span>
-                {t} <b>{n}</b>
-              </span>
-            ))}
-          </div>
-        )}
+      {types.length > 1 && (
+        <div class="types" data-reveal>
+          {types.map(([t, n]) => (
+            <span>
+              {t} <b>{n}</b>
+            </span>
+          ))}
+        </div>
+      )}
 
-        <ul class="grid" data-reveal>
-          {CLIENTS.map((c) => {
-            const Tag = c.link ? 'a' : 'div';
-            return (
-              <li>
-                <Tag class="client glow-card" {...(c.link ? { href: c.link, target: '_blank', rel: 'noopener' } : {})}>
-                  <div class="logo">
-                    {c.logo ? (
-                      <img src={`${base}/clientes/${c.logo}`} alt={`Logo de ${c.name}`} loading="lazy" decoding="async" width="72" height="72" />
-                    ) : (
-                      <span aria-hidden="true">{initials(c.name)}</span>
-                    )}
-                  </div>
-                  <div class="info">
-                    <b>{c.name}</b>
-                    <span class="type">{c.type}</span>
-                    {(c.city || c.since) && (
-                      <span class="meta">
-                        {[c.city, c.since && `con MyNeg desde ${c.since}`].filter(Boolean).join(' · ')}
-                      </span>
-                    )}
-                  </div>
-                </Tag>
-              </li>
-            );
-          })}
-        </ul>
+      <ul class="grid" data-reveal>
+        {CLIENTS.map((c) => {
+          const Tag = c.link ? 'a' : 'div';
+          return (
+            <li>
+              <Tag class="client glow-card" {...(c.link ? { href: c.link, target: '_blank', rel: 'noopener' } : {})}>
+                <div class="logo">
+                  {c.logo ? (
+                    <img
+                      src={`${base}/clientes/${c.logo}`}
+                      alt={`Logo de ${c.name}`}
+                      loading="lazy"
+                      decoding="async"
+                      width="72"
+                      height="72"
+                    />
+                  ) : (
+                    <span aria-hidden="true">{initials(c.name)}</span>
+                  )}
+                </div>
+                <div class="info">
+                  <b>{c.name}</b>
+                  <span class="type">{c.type}</span>
+                  {(c.city || c.since) && (
+                    <span class="meta">
+                      {[c.city, c.since && `con MyNeg desde ${c.since}`].filter(Boolean).join(' · ')}
+                    </span>
+                  )}
+                </div>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
 
-        {withQuote.length > 0 && (
-          <div class="quotes" data-reveal>
-            {withQuote.map((c) => (
-              <figure class="glow-card">
-                <blockquote>«{c.quote}»</blockquote>
-                <figcaption>
-                  {c.author ?? c.name}
-                  {c.author && <span> · {c.name}</span>}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-  )
-}
+      {withQuote.length > 0 && (
+        <div class="quotes" data-reveal>
+          {withQuote.map((c) => (
+            <figure class="glow-card">
+              <blockquote>«{c.quote}»</blockquote>
+              <figcaption>
+                {c.author ?? c.name}
+                {c.author && <span> · {c.name}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
 
 <style>
   .types {
